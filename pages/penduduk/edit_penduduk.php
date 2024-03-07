@@ -1,5 +1,4 @@
 <?php
-include "config/connection.php";
 if (isset($_GET['id_penduduk'])) {
     $sql = "SELECT * FROM `penduduk` WHERE id_penduduk='" . $_GET['id_penduduk'] . "'";
     $query = mysqli_query($koneksi, $sql);

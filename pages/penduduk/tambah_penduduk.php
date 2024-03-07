@@ -149,7 +149,7 @@
     Batal
 </a>
 <?php
-include "config/connection.php";
+
 if (isset($_POST['simpan'])) {
     $nama_penduduk = $_POST['nama_penduduk'];
     $tempat_lahir_penduduk = $_POST['tempat_lahir_penduduk'];

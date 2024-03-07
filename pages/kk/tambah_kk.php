@@ -18,7 +18,7 @@
     </button>
 </form>
 <?php
-include "config/connection.php";
+
 if (isset($_POST['simpan'])) {
     $nik_penduduk = $_POST['nik_penduduk'];
     $k_keluarga = $_POST['k_keluarga'];

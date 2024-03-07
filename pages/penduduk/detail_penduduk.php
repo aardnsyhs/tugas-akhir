@@ -1,6 +1,5 @@
 <h2>Detail Data Penduduk</h2>
 <?php
-include "config/connection.php";
 $get_id_penduduk = $_GET['id_penduduk'];
 $query = "SELECT * FROM `penduduk` WHERE id_penduduk = $get_id_penduduk";
 $hasil = mysqli_query($koneksi, $query);

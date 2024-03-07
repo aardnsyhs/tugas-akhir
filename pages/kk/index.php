@@ -1,5 +1,5 @@
 <?php
-include "config/connection.php";
+
 $query = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk = penduduk.id_penduduk";
 $hasil = mysqli_query($koneksi, $query);
 $data_kk = [];

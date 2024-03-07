@@ -1,5 +1,5 @@
 <?php
-include "config/connection.php";
+
 if (isset($_GET['id_kk'])) {
     $id_kk = $_GET['id_kk'];
     $sql_cek = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk=penduduk.id_penduduk WHERE id_kk='$id_kk'";

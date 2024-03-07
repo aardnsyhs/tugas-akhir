@@ -1,5 +1,5 @@
 <?php
-include "config/connection.php";
+
 if (isset($_GET['id_anggota'])) {
     $sql_hapus = "DELETE FROM anggota_keluarga WHERE id_anggota='" . $_GET['id_anggota'] . "'";
     $query_hapus = mysqli_query($koneksi, $sql_hapus);

@@ -1,5 +1,5 @@
 <?php
-include "config/connection.php";
+
 $hasil = mysqli_query($koneksi, "SELECT *, TIMESTAMPDIFF(YEAR, `tanggal_lahir_penduduk`, CURDATE()) AS usia_penduduk FROM `penduduk`");
 $data_penduduk = [];
 while ($row = mysqli_fetch_assoc($hasil)) {

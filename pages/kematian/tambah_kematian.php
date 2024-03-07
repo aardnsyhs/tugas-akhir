@@ -8,7 +8,7 @@
                 <select name="id_penduduk" id="id_penduduk" class="form-control select2bs4" required>
                     <option selected="selected">- Pilih Penduduk -</option>
                     <?php
-                    include "config/connection.php";
+
                     $query = "SELECT * FROM penduduk WHERE status='Ada'";
                     $hasil = mysqli_query($koneksi, $query);
                     while ($row = mysqli_fetch_array($hasil)) {

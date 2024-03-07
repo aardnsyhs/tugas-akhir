@@ -10,6 +10,7 @@ if (!isset($_SESSION["username"])) {
     $data_user = isset($_SESSION["username"]) ? $_SESSION["username"] : "";
     $data_level = isset($_SESSION["status_user"]) ? $_SESSION["status_user"] : "";
 }
+include "config/connection.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -142,9 +143,8 @@ if (!isset($_SESSION["username"])) {
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=surat_kematian" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>Surat Kematian</p>
                                     </a>
@@ -314,20 +314,6 @@ if (!isset($_SESSION["username"])) {
                                 include "admin/pindah/del_pindah.php";
                                 break;
 
-                                //datang
-                            case 'data-datang':
-                                include "admin/datang/data_datang.php";
-                                break;
-                            case 'add-datang':
-                                include "admin/datang/add_datang.php";
-                                break;
-                            case 'edit-datang':
-                                include "admin/datang/edit_datang.php";
-                                break;
-                            case 'del-datang':
-                                include "admin/datang/del_datang.php";
-                                break;
-
                                 //suket
                             case 'suket-domisili':
                                 include "surat/suket_domisili.php";
@@ -335,8 +321,8 @@ if (!isset($_SESSION["username"])) {
                             case 'suket-lahir':
                                 include "surat/suket_lahir.php";
                                 break;
-                            case 'suket-mati':
-                                include "surat/suket_mati.php";
+                            case 'surat_kematian':
+                                include "pages/surat/surat_kematian.php";
                                 break;
                             case 'suket-datang':
                                 include "surat/suket_datang.php";

@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    include "config/connection.php";
+
                     $no = 1;
                     $sql = $koneksi->query("SELECT * FROM `penduduk` JOIN `surat_kematian` ON `penduduk`.id_penduduk = `surat_kematian`.id_penduduk");
                     while ($row = mysqli_fetch_assoc($sql)) {

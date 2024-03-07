@@ -1,5 +1,5 @@
 <?php
-include "config/connection.php";
+
 $get_id_penduduk = $_GET['id_penduduk'];
 $query = "SELECT * FROM `penduduk` JOIN `surat_kematian` ON `penduduk`.id_penduduk = `surat_kematian`.id_penduduk WHERE `surat_kematian`.id_penduduk = '$get_id_penduduk'";
 $hasil = mysqli_query($koneksi, $query);

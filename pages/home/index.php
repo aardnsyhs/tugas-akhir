@@ -1,5 +1,5 @@
 <?php
-include "config/connection.php";
+
 $sql = $koneksi->query("SELECT COUNT(id_penduduk) AS pend FROM penduduk WHERE status='Ada'");
 while ($data = $sql->fetch_assoc()) {
     $pend = $data['pend'];
