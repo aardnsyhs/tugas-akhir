@@ -40,7 +40,7 @@
             <td><input type="text" class="form-control" name="tempat_kematian" id="tempat_kematian" required></td>
         </tr>
         <tr>
-            <th>Penyebab Kematiann</th>
+            <th>Penyebab Kematian</th>
             <td>:</td>
             <td><input type="text" class="form-control" name="penyebab_kematian" id="penyebab_kematian" required></td>
         </tr>
