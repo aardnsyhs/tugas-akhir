@@ -107,8 +107,25 @@ if (isset($_POST['ubah'])) {
            `tanggal_kematian` = '" . $_POST['tanggal_kematian'] . "', 
            `jam_kematian` = '" . $_POST['jam_kematian'] . "', 
            `penyebab_kematian` = '" . $_POST['penyebab_kematian'] . "', 
-           `tempat_kematian` = '" . $_POST['tampat_kematian'] . "', 
+           `tempat_kematian` = '" . $_POST['tempat_kematian'] . "', 
            `usia_kematian` = '" . $_POST['usia_kematian'] . "', 
            `bin_binti` = '" . $_POST['bin_binti'] . "' 
-           WHERE `surat_kematian`.`id_surat_kematian` = 5";
+           WHERE `surat_kematian`.`id_surat_kematian` = '" . $data_kematian[0]['id_surat_kematian'] . "'";
+    $query = mysqli_query($koneksi, $sql);
+    mysqli_close($koneksi);
+    if ($query) {
+        echo "<script>
+      Swal.fire({title: 'Ubah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
+      }).then((result) => {if (result.value)
+        {window.location = 'index.php?page=kematian';
+        }
+      })</script>";
+    } else {
+        echo "<script>
+      Swal.fire({title: 'Ubah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
+      }).then((result) => {if (result.value)
+        {window.location = 'index.php?page=kematian';
+        }
+      })</script>";
+    }
 }
