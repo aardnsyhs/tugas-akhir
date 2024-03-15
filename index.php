@@ -318,14 +318,8 @@ include "config/connection.php";
                             case 'suket-domisili':
                                 include "surat/suket_domisili.php";
                                 break;
-                            case 'suket-lahir':
-                                include "surat/suket_lahir.php";
-                                break;
                             case 'surat_kematian':
-                                include "pages/surat/surat_kematian.php";
-                                break;
-                            case 'suket-datang':
-                                include "surat/suket_datang.php";
+                                include "surat/surat_kematian.php";
                                 break;
                             case 'suket-pindah':
                                 include "surat/suket_pindah.php";
@@ -333,7 +327,7 @@ include "config/connection.php";
 
                                 //default
                             default:
-                                echo "<center><h1> ERROR !</h1></center>";
+                                echo "<center><h1> 404 Page Not Found!</h1></center>";
                                 break;
                         }
                     } else {

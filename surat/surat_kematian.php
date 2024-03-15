@@ -27,6 +27,6 @@
         </div>
     </div>
     <div class="card-footer">
-        <a href="../report/cetak_kematian.php?id_surat_kematian=<?= $row['id_surat_kematian'] ?>" class="btn btn-primary" target="_blank">Cetak</a>
+        <a href="./report/cetak_kematian.php?id_surat_kematian=<?= $row['id_surat_kematian'] ?>" class="btn btn-primary" target="_blank">Cetak</a>
     </div>
 </div>

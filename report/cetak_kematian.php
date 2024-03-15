@@ -1,12 +1,12 @@
 <?php
-require_once("../../assets/lib/fpdf/fpdf.php");
-require_once("config/connection.php");
+require_once("../assets/lib/fpdf/fpdf.php");
+require_once("../config/connection.php");
 
 class PDF extends FPDF
 {
     function Header()
     {
-        $this->Image('../../assets/dist/img/logokotacimahi.png', 20, 10, 24, 24);
+        $this->Image('../assets/dist/img/logokotacimahi.png', 20, 10, 24, 24);
 
         $this->SetFont('Times', 'B', 15);
         $this->Cell(200, 8, 'PEMERINTAH KOTA CIMAHI', 0, 1, 'C');
@@ -36,10 +36,10 @@ class PDF extends FPDF
     }
 }
 
-$get_id_penduduk = $_GET['id_penduduk'];
+$get_id_surat_kematian = $_GET['id_surat_kematian'];
 
-$query = "SELECT * FROM `penduduk` JOIN `surat_kematian` ON `penduduk`.id_penduduk = `surat_kematian`.id_penduduk WHERE `penduduk`.id_penduduk = $get_id_penduduk";
-$hasil = mysqli_query($conn, $query);
+$query = "SELECT * FROM `surat_kematian` JOIN penduduk ON surat_kematian.id_penduduk=surat_kematian.id_penduduk WHERE surat_kematian.id_surat_kematian = '$get_id_surat_kematian'";
+$hasil = mysqli_query($koneksi, $query);
 $data_penduduk = [];
 while ($row = mysqli_fetch_assoc($hasil)) {
     $data_penduduk[] = $row;
@@ -55,7 +55,7 @@ $pdf->SetFont('Times', '', 12);
 $nomor = 1;
 
 $pdf->Ln();
-$pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Kepala Desa Terong Tawah, Kecamatan Labuapi, Kabupaten Lombok Barat menerangkan dengan sebenarnya bahwa : ', 0, 'L');
+$pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Kepala Dukcapil Cimahi, Kecamatan Cimahi Utara, Kota Cimahi menerangkan dengan sebenarnya bahwa : ', 0, 'L');
 
 $pdf->SetX(15);
 $pdf->cell(45, 7, 'Nama', 0, 0, 'L');

@@ -62,20 +62,19 @@
 </form>
 <?php
 if (isset($_POST['simpan'])) {
-    $sql_simpan = "INSERT INTO surat_kematian 
-                   VALUES (NULL, 
-                   '" . $_POST['id_penduduk'] . "',
-                   '" . $_POST['tanggal_kematian'] . "',
-                   '" . $_POST['jam_kematian'] . "', 
-                   '" . $_POST['penyebab_kematian'] . "', 
-                   '" . $_POST['tempat_kematian'] . "', 
-                   '" . $_POST['usia_kematian'] . "', 
-                   '" . $_POST['bin_binti'] . "')";
+    $sql_simpan = "INSERT INTO surat_kematian (id_penduduk, tanggal_kematian, jam_kematian, penyebab_kematian, tempat_kematian, usia_kematian, bin_binti) VALUES (
+			'" . $_POST['id_penduduk'] . "',
+            '" . $_POST['tanggal_kematian'] . "',
+            '" . $_POST['jam_kematian'] . "',
+            '" . $_POST['penyebab_kematian'] . "',
+            '" . $_POST['tempat_kematian'] . "',
+            '" . $_POST['usia_kematian'] . "',
+            '" . $_POST['bin_binti'] . "')";
     $query_simpan = mysqli_query($koneksi, $sql_simpan);
 
     $sql_ubah = "UPDATE penduduk SET 
-                 status='Meninggal'
-                 WHERE id_penduduk='" . $_POST['id_penduduk'] . "'";
+			status='Meninggal'
+			WHERE id_penduduk='" . $_POST['id_penduduk'] . "'";
     $query_ubah = mysqli_query($koneksi, $sql_ubah);
     mysqli_close($koneksi);
 
