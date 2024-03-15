@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login | Tugas Akhir </title>
-    <link rel="icon" href="assets/dist/img/izin.png">
+    <link rel="icon" href="assets/dist/img/penduduk.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">

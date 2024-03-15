@@ -14,8 +14,7 @@
                     $query = "SELECT id_surat_kematian, nik_penduduk, nama_penduduk FROM surat_kematian JOIN penduduk ON 
 				                  surat_kematian.id_penduduk=penduduk.id_penduduk";
                     $hasil = mysqli_query($koneksi, $query);
-                    foreach ($hasil as $row) :
-                    ?>
+                    foreach ($hasil as $row) : ?>
                         <option value="<?= $row['id_surat_kematian'] ?>">
                             <?= $row['nik_penduduk'] ?>
                             -
