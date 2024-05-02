@@ -127,7 +127,7 @@ include "config/connection.php";
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=pindah" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>Data Pindah</p>
                                     </a>
@@ -301,11 +301,11 @@ include "config/connection.php";
                                 break;
 
                                 //pindah
-                            case 'data-pindah':
-                                include "admin/pindah/data_pindah.php";
+                            case 'pindah':
+                                include "pages/pindah/index.php";
                                 break;
-                            case 'add-pindah':
-                                include "admin/pindah/add_pindah.php";
+                            case 'tambah_pindah':
+                                include "pages/pindah/tambah_pindah.php";
                                 break;
                             case 'edit-pindah':
                                 include "admin/pindah/edit_pindah.php";

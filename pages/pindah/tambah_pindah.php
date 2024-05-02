@@ -1,4 +1,4 @@
-<h3>A. Tambah Data Kematian Penduduk</h3>
+<h3>A. Tambah Data Pindah Penduduk</h3>
 <table class="table table-striped table-middle">
     <form action="" method="post">
         <tr>
@@ -24,34 +24,24 @@
             </td>
         </tr>
         <tr>
-            <th>Tanggal Kematian</th>
+            <th>Alamat Asal</th>
             <td>:</td>
-            <td><input type="date" class="form-control" name="tanggal_kematian" id="tanggal_kematian" required></td>
+            <td><input type="text" class="form-control" name="alamat_asal" id="alamat_asal" required></td>
         </tr>
         <tr>
-            <th>Jam Kematian</th>
+            <th>Alamat Tujuan</th>
             <td>:</td>
-            <td><input type="time" class="form-control" name="jam_kematian" id="jam_kematian" required></td>
+            <td><input type="text" class="form-control" name="alamat_tujuan" id="alamat_tujuan" required></td>
         </tr>
         <tr>
-            <th>Tempat Kematian</th>
+            <th>Alasan Pindah</th>
             <td>:</td>
-            <td><input type="text" class="form-control" name="tempat_kematian" id="tempat_kematian" required></td>
+            <td><input type="text" class="form-control" name="alasan_pindah" id="alasan_pindah" required></td>
         </tr>
         <tr>
-            <th>Penyebab Kematian</th>
+            <th>Keluarga Pindah</th>
             <td>:</td>
-            <td><input type="text" class="form-control" name="penyebab_kematian" id="penyebab_kematian" required></td>
-        </tr>
-        <tr>
-            <th>Usia Kematian</th>
-            <td>:</td>
-            <td><input type="number" class="form-control" name="usia_kematian" id="usia_kematian" required></td>
-        </tr>
-        <tr>
-            <th>Bin/Binti</th>
-            <td>:</td>
-            <td><input type="text" class="form-control" name="bin_binti" id="bin_binti" required></td>
+            <td><input type="text" class="form-control" name="keluarga_pindah" id="keluarga_pindah" required></td>
         </tr>
 </table>
 <button type="submit" class="btn btn-primary" name="simpan">
@@ -61,14 +51,12 @@
 </form>
 <?php
 if (isset($_POST['simpan'])) {
-    $sql_simpan = "INSERT INTO surat_kematian (id_penduduk, tanggal_kematian, jam_kematian, penyebab_kematian, tempat_kematian, usia_kematian, bin_binti) VALUES (
+    $sql_simpan = "INSERT INTO surat_pindah (id_penduduk, alamat_asal, alamat_tujuan, alasan_pindah, keluarga_pindah) VALUES (
 			'" . $_POST['id_penduduk'] . "',
-            '" . $_POST['tanggal_kematian'] . "',
-            '" . $_POST['jam_kematian'] . "',
-            '" . $_POST['penyebab_kematian'] . "',
-            '" . $_POST['tempat_kematian'] . "',
-            '" . $_POST['usia_kematian'] . "',
-            '" . $_POST['bin_binti'] . "')";
+            '" . $_POST['alamat_asal'] . "',
+            '" . $_POST['alamat_tujuan'] . "',
+            '" . $_POST['alasan_pindah'] . "',
+            '" . $_POST['keluarga_pindah'] . "')";
     $query_simpan = mysqli_query($koneksi, $sql_simpan);
 
     $sql_ubah = "UPDATE penduduk SET 
