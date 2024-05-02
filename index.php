@@ -163,7 +163,7 @@ include "config/connection.php";
                         </li>
                     </ul>
                     </li>
-                    <li class="nav-item has-treeview">
+                    <!-- <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-print"></i>
                             <p>
@@ -203,7 +203,7 @@ include "config/connection.php";
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-header">Setting</li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
