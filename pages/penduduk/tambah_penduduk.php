@@ -133,7 +133,9 @@
                 <select class="form-control" name="status_perkawinan_penduduk" required>
                     <option selected disabled>- Pilih -</option>
                     <option value="Kawin">Kawin</option>
+                    <option value="Belum Kawin">Belum Kawin</option>
                     <option value="Tidak Kawin">Tidak Kawin</option>
+                    <option value="Cerai">Cerai</option>
                 </select>
             </td>
         </tr>
