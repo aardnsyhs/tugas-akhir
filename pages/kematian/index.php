@@ -25,7 +25,6 @@
                 </thead>
                 <tbody>
                     <?php
-
                     $no = 1;
                     $sql = $koneksi->query("SELECT * FROM `penduduk` JOIN `surat_kematian` ON `penduduk`.id_penduduk = `surat_kematian`.id_penduduk");
                     function hitungUsia($tanggal_lahir, $tanggal_kematian)
