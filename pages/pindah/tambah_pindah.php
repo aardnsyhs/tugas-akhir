@@ -5,14 +5,14 @@
             <th width="20%">Penduduk</th>
             <td width="1%">:</td>
             <td>
-                <select name="id_penduduk" id="id_penduduk" class="form-control select2bs4" required>
-                    <option selected="selected">- Pilih Penduduk -</option>
+                <select name="id_penduduk" id="id_penduduk" class="form-control select2bs4" onchange="isiAlamatAsal()" required>
+                    <option selected="selected" disabled>- Pilih Penduduk -</option>
                     <?php
                     $query = "SELECT * FROM penduduk WHERE status='Ada'";
                     $hasil = mysqli_query($koneksi, $query);
                     while ($row = mysqli_fetch_array($hasil)) {
                     ?>
-                        <option value="<?= $row['id_penduduk'] ?>">
+                        <option value="<?= $row['id_penduduk'] ?>" data-alamat-asal="<?= $row['alamat_penduduk'] ?>">
                             <?= $row['nik_penduduk'] ?>
                             -
                             <?= $row['nama_penduduk'] ?>
@@ -26,7 +26,7 @@
         <tr>
             <th>Alamat Asal</th>
             <td>:</td>
-            <td><input type="text" class="form-control" name="alamat_asal" id="alamat_asal" required></td>
+            <td><input type="text" class="form-control" name="alamat_asal" id="alamat_asal" readonly></td>
         </tr>
         <tr>
             <th>Alamat Tujuan</th>
@@ -49,6 +49,13 @@
     Simpan
 </button>
 </form>
+<script>
+    const isiAlamatAsal = () => {
+        const pendudukSelect = document.getElementById("id_penduduk");
+        const alamatAsal = pendudukSelect.options[pendudukSelect.selectedIndex].dataset.alamatAsal;
+        document.getElementById("alamat_asal").value = alamatAsal;
+    };
+</script>
 <?php
 if (isset($_POST['simpan'])) {
     $sql_simpan = "INSERT INTO surat_pindah (id_penduduk, alamat_asal, alamat_tujuan, alasan_pindah, keluarga_pindah) VALUES (
@@ -69,14 +76,14 @@ if (isset($_POST['simpan'])) {
         echo "<script>
       Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {if (result.value){
-          window.location = 'index.php?page=kematian';
+          window.location = 'index.php?page=pindah';
           }
       })</script>";
     } else {
         echo "<script>
       Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {if (result.value){
-          window.location = 'index.php?page=tambah_kematian';
+          window.location = 'index.php?page=tambah_pindah';
           }
       })</script>";
     }
