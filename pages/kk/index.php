@@ -1,5 +1,4 @@
 <?php
-
 $query = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk = penduduk.id_penduduk";
 $hasil = mysqli_query($koneksi, $query);
 $data_kk = [];
@@ -38,7 +37,8 @@ while ($row = mysqli_fetch_assoc($hasil)) $data_kk[] = $row;
                             <td><?= $kk['k_keluarga'] ?></td>
                             <td><?= $kk['alamat_penduduk'] ?></td>
                             <td>
-                                <a href="?page=anggota&id_kk=<?= $kk['id_kk'] ?>" title="Anggota KK" class="btn btn-info btn-sm">
+                                <?php $encoded_id_kk = base64_encode($kk['id_kk']); ?>
+                                <a href="?page=anggota&id_kk=<?= $encoded_id_kk ?>" title="Anggota KK" class="btn btn-info btn-sm">
                                     <i class="fa fa-users"></i>
                                 </a>
                             </td>

@@ -42,13 +42,8 @@ while ($row = mysqli_fetch_assoc($hasil)) {
 <h3>B. Data Alamat</h3>
 <table class="table table-striped">
     <tr>
-        <th width="20%">Alamat KTP</th>
+        <th width="20%">Alamat</th>
         <td width="1%">:</td>
-        <td><?= $data_penduduk[0]['alamat_ktp_penduduk'] ?></td>
-    </tr>
-    <tr>
-        <th>Alamat</th>
-        <td>:</td>
         <td><?= $data_penduduk[0]['alamat_penduduk'] ?></td>
     </tr>
     <tr>

@@ -50,15 +50,8 @@ if (isset($_GET['id_penduduk'])) {
     <h3>B. Data Alamat</h3>
     <table class="table table-striped table-middle">
         <tr>
-            <th width="20%">Alamat KTP</th>
+            <th width="20%">Alamat</th>
             <td width="1%">:</td>
-            <td>
-                <input type="text" class="form-control" name="alamat_ktp_penduduk" value="<?= $data['alamat_ktp_penduduk'] ?>" required></input>
-            </td>
-        </tr>
-        <tr>
-            <th>Alamat</th>
-            <td>:</td>
             <td>
                 <input type="text" class="form-control" name="alamat_penduduk" value="<?= $data['alamat_penduduk'] ?>" required></input>
             </td>
@@ -194,7 +187,6 @@ if (isset($_POST['ubah'])) {
            `tempat_lahir_penduduk` = '" . $_POST['tempat_lahir_penduduk'] . "', 
            `tanggal_lahir_penduduk` = '" . $_POST['tanggal_lahir_penduduk'] . "', 
            `jenis_kelamin_penduduk` = '" . $_POST['jenis_kelamin_penduduk'] . "', 
-           `alamat_ktp_penduduk` = '" . $_POST['alamat_ktp_penduduk'] . "', 
            `alamat_penduduk` = '" . $_POST['alamat_penduduk'] . "', 
            `desa_kelurahan_penduduk` = '" . $_POST['desa_kelurahan_penduduk'] . "', 
            `kecamatan_penduduk` = '" . $_POST['kecamatan_penduduk'] . "', 

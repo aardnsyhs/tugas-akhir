@@ -48,7 +48,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-info btn-block btn-flat" name="btnLogin" title="Masuk Sistem">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat" name="btnLogin" title="Masuk Sistem">
                                 <b>Login</b>
                             </button>
                         </div>
@@ -79,21 +79,30 @@ if (isset($_POST['btnLogin'])) {
     if ($jumlah_login == 1) {
         session_start();
         $_SESSION["id"] = $data_login["id_user"];
+        $_SESSION["id_role"] = $data_login["id_role"];
         $_SESSION["nama_user"] = $data_login["nama_user"];
         $_SESSION["username"] = $data_login["username"];
         $_SESSION["password"] = $data_login["password"];
 
-        if (isset($data_login["status_user"])) {
-            $_SESSION["status_user"] = $data_login["status_user"];
-        } else {
-            $_SESSION["status_user"] = "";
-        }
+        $user = $data_login['username'];
 
-        echo "<script>
-            Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
-            }).then((result) => {if (result.value)
-                {window.location = 'index.php';}
-            })</script>";
+        $SQL  = "SELECT * FROM penduduk WHERE id_user = $user";
+
+        if (isset($data_login["status_user"])) $_SESSION["status_user"] = $data_login["status_user"];
+
+        if ($_SESSION['id_role'] === '1') {
+            echo "<script>
+                Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
+                }).then((result) => {if (result.value)
+                    {window.location = 'index.php';}
+                })</script>";
+        } elseif ($_SESSION['id_role'] === '4') {
+            echo "<script>
+                Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
+                }).then((result) => {if (result.value)
+                    {window.location = 'users/index.php';}
+                })</script>";
+        }
     } else {
         echo "<script>
             Swal.fire({title: 'Login Gagal',text: '',icon: 'error',confirmButtonText: 'OK'

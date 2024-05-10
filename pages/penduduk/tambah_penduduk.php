@@ -32,13 +32,8 @@
     <h3>B. Data Alamat</h3>
     <table class="table table-striped table-middle">
         <tr>
-            <th width="20%">Alamat KTP</th>
+            <th width="20%">Alamat</th>
             <td width="1%">:</td>
-            <td><textarea class="form-control" name="alamat_ktp_penduduk" required></textarea></td>
-        </tr>
-        <tr>
-            <th>Alamat</th>
-            <td>:</td>
             <td><textarea class="form-control" name="alamat_penduduk" required></textarea></td>
         </tr>
         <tr>
@@ -156,7 +151,6 @@ if (isset($_POST['simpan'])) {
     $nama_penduduk = $_POST['nama_penduduk'];
     $tempat_lahir_penduduk = $_POST['tempat_lahir_penduduk'];
     $jenis_kelamin_penduduk = $_POST['jenis_kelamin_penduduk'];
-    $alamat_ktp_penduduk = $_POST['alamat_ktp_penduduk'];
     $alamat_penduduk = $_POST['alamat_penduduk'];
     $desa_kelurahan_penduduk = $_POST['desa_kelurahan_penduduk'];
     $kecamatan_penduduk = $_POST['kecamatan_penduduk'];
@@ -181,17 +175,23 @@ if (isset($_POST['simpan'])) {
 
     $query = "INSERT INTO `penduduk`
               (`id_penduduk`, `nik_penduduk`, `nama_penduduk`, `tempat_lahir_penduduk`, `tanggal_lahir_penduduk`, 
-              `jenis_kelamin_penduduk`, `alamat_ktp_penduduk`, `alamat_penduduk`, `desa_kelurahan_penduduk`, 
+              `jenis_kelamin_penduduk`, `alamat_penduduk`, `desa_kelurahan_penduduk`, 
               `kecamatan_penduduk`, `kabupaten_kota_penduduk`, `provinsi_penduduk`, `negara_penduduk`, `rt_penduduk`, 
               `rw_penduduk`, `agama_penduduk`, `pendidikan_terakhir_penduduk`, `pekerjaan_penduduk`, 
               `status_perkawinan_penduduk`, `status`)
               VALUES (NULL, '$nik_penduduk', '$nama_penduduk', '$tempat_lahir_penduduk', 
-              '$tanggal_lahir_penduduk', '$jenis_kelamin_penduduk', '$alamat_ktp_penduduk', 
+              '$tanggal_lahir_penduduk', '$jenis_kelamin_penduduk',
               '$alamat_penduduk', '$desa_kelurahan_penduduk', '$kecamatan_penduduk', '$kabupaten_kota_penduduk', 
               '$provinsi_penduduk', '$negara_penduduk', '$rt_penduduk', '$rw_penduduk', '$agama_penduduk', 
               '$pendidikan_terakhir_penduduk', '$pekerjaan_penduduk', '$status_perkawinan_penduduk', 'Ada')";
-    $hasil = mysqli_query($koneksi, $query);;
+    $hasil = mysqli_query($koneksi, $query);
     if ($hasil) {
+
+        // Membuat User
+        $pass_nik = md5($nik_penduduk);
+        $sql = "INSERT INTO user VALUES (NULL, '4', '$nama_penduduk', '$nik_penduduk', '$pass_nik', 'Penduduk')";
+        $hasil_user = mysqli_query($koneksi, $sql);
+
         echo "<script>
                 Swal.fire({title: 'Tambah Data Penduduk Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
                 }).then((result) => {if (result.value){

@@ -12,7 +12,7 @@
                     $hasil = mysqli_query($koneksi, $query);
                     while ($row = mysqli_fetch_array($hasil)) {
                     ?>
-                        <option value="<?= $row['id_penduduk'] ?>" data-alamat-asal="<?= $row['alamat_penduduk'] ?>">
+                        <option value="<?= $row['id_penduduk'] ?>" data-alamat-asal="<?= $row['alamat_penduduk'] . ", " . $row['provinsi_penduduk'] ?>">
                             <?= $row['nik_penduduk'] ?>
                             -
                             <?= $row['nama_penduduk'] ?>

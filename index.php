@@ -6,6 +6,7 @@ if (!isset($_SESSION["username"])) {
 } else {
     $koneksi = include("config/connection.php");
     $data_id = isset($_SESSION["id"]) ? $_SESSION["id"] : "";
+    $id_role = isset($_SESSION["id_role"]) ? $_SESSION["id_role"] : "";
     $data_nama = isset($_SESSION["nama_user"]) ? $_SESSION["nama_user"] : "";
     $data_user = isset($_SESSION["username"]) ? $_SESSION["username"] : "";
     $data_level = isset($_SESSION["status_user"]) ? $_SESSION["status_user"] : "";
@@ -30,6 +31,7 @@ include "config/connection.php";
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <script src="assets/plugins/alert.js"></script>
 </head>
+
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -57,7 +59,6 @@ include "config/connection.php";
                 <img src="assets/dist/img/penduduk.png" alt="Logo Penduduk" class="brand-image">
                 <span class="brand-text"> TUGAS AKHIR</span>
             </a>
-
             <div class="sidebar">
                 <div class="user-panel mt-2 pb-2 mb-2 d-flex">
                     <div class="image">
@@ -65,10 +66,10 @@ include "config/connection.php";
                     </div>
                     <div class="info">
                         <a href="index.php" class="d-block">
-                            <?php echo $data_nama; ?>
+                            <?= $data_nama; ?>
                         </a>
                         <span class="badge badge-success">
-                            <?php echo $data_level; ?>
+                            <?= $data_level; ?>
                         </span>
                     </div>
                 </div>
@@ -163,56 +164,6 @@ include "config/connection.php";
                         </li>
                     </ul>
                     </li>
-                    <!-- <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-print"></i>
-                            <p>
-                                Kelola Laporan
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-warning"></i>
-                                    <p>Data Penduduk</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-warning"></i>
-                                    <p>Data Kartu Keluarga</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="?page=kematian" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-warning"></i>
-                                    <p>Data Meninggal</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-warning"></i>
-                                    <p>Data Izin Tinggal</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-warning"></i>
-                                    <p>Data Pindah</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    <!-- <li class="nav-header">Setting</li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user"></i>
-                            <p>
-                                Pengguna Sistem
-                            </p>
-                        </a>
-                    </li> -->
                     <li class="nav-header">Setting</li>
                     <li class="nav-item">
                         <a onclick="return confirm('Apakah Anda yakin ingin keluar?')" href="logout.php" class="nav-link">
@@ -234,7 +185,6 @@ include "config/connection.php";
                     if (isset($_GET['page'])) {
                         $page = $_GET['page'];
                         switch ($page) {
-
                                 //Pengguna
                             case 'data-pengguna':
                                 include "admin/pengguna/data_pengguna.php";
@@ -333,8 +283,6 @@ include "config/connection.php";
                     } else {
                         if ($data_level == "Admin") {
                             include "pages/home/index.php";
-                        } elseif ($data_level == "Kaur Pemerintah") {
-                            include "home/kaur.php";
                         }
                     }
                     ?>
