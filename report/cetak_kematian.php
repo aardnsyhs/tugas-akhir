@@ -36,13 +36,14 @@ class PDF extends FPDF
     }
 }
 
-$get_id_surat_kematian = $_GET['id_surat_kematian'];
+if (isset($_POST['Cetak'])) {
+    $id = $_POST['id_surat_kematian'];
+}
 
-$query = "SELECT * FROM `surat_kematian` JOIN penduduk ON surat_kematian.id_penduduk=surat_kematian.id_penduduk WHERE surat_kematian.id_surat_kematian = '$get_id_surat_kematian'";
+$query = "SELECT * FROM penduduk JOIN surat_kematian ON penduduk.id_penduduk=surat_kematian.id_penduduk WHERE surat_kematian.id_surat_kematian = '$id'";
 $hasil = mysqli_query($koneksi, $query);
 
 foreach ($hasil as $data_penduduk) :
-
     $pdf = new PDF('P', 'mm', [210, 330]);
     $pdf->AliasNbPages();
     $pdf->AddPage();

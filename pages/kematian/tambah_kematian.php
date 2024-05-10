@@ -8,7 +8,6 @@
                 <select name="id_penduduk" id="id_penduduk" class="form-control select2bs4" required>
                     <option selected="selected">- Pilih Penduduk -</option>
                     <?php
-
                     $query = "SELECT * FROM penduduk WHERE status='Ada'";
                     $hasil = mysqli_query($koneksi, $query);
                     while ($row = mysqli_fetch_array($hasil)) {
@@ -45,11 +44,6 @@
             <td><input type="text" class="form-control" name="penyebab_kematian" id="penyebab_kematian" required></td>
         </tr>
         <tr>
-            <th>Usia Kematian</th>
-            <td>:</td>
-            <td><input type="number" class="form-control" name="usia_kematian" id="usia_kematian" required></td>
-        </tr>
-        <tr>
             <th>Bin/Binti</th>
             <td>:</td>
             <td><input type="text" class="form-control" name="bin_binti" id="bin_binti" required></td>
@@ -62,19 +56,31 @@
 </form>
 <?php
 if (isset($_POST['simpan'])) {
+    $sql = $koneksi->query("SELECT * FROM `penduduk` JOIN `surat_kematian` ON `penduduk`.id_penduduk = `surat_kematian`.id_penduduk");
+    function hitungUsia($tanggal_lahir, $tanggal_kematian)
+    {
+        $lahir = new DateTime($tanggal_lahir);
+        $kematian = new DateTime($tanggal_kematian);
+        $usia = $lahir->diff($kematian);
+        return $usia->y;
+    }
+    foreach ($sql as $data_kematian) :
+        $tanggal_lahir = $data_kematian['tanggal_lahir_penduduk'];
+    endforeach;
+    $tanggal_kematian = $_POST['tanggal_kematian'];
     $sql_simpan = "INSERT INTO surat_kematian (id_penduduk, tanggal_kematian, jam_kematian, penyebab_kematian, tempat_kematian, usia_kematian, bin_binti) VALUES (
 			'" . $_POST['id_penduduk'] . "',
             '" . $_POST['tanggal_kematian'] . "',
             '" . $_POST['jam_kematian'] . "',
             '" . $_POST['penyebab_kematian'] . "',
             '" . $_POST['tempat_kematian'] . "',
-            '" . $_POST['usia_kematian'] . "',
+            '" . hitungUsia($tanggal_lahir, $tanggal_kematian) . "',
             '" . $_POST['bin_binti'] . "')";
     $query_simpan = mysqli_query($koneksi, $sql_simpan);
 
     $sql_ubah = "UPDATE penduduk SET 
-			status='Meninggal'
-			WHERE id_penduduk='" . $_POST['id_penduduk'] . "'";
+                 status='Meninggal'
+                 WHERE id_penduduk='" . $_POST['id_penduduk'] . "'";
     $query_ubah = mysqli_query($koneksi, $sql_ubah);
     mysqli_close($koneksi);
 

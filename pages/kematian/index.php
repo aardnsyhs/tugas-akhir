@@ -25,7 +25,6 @@
                 </thead>
                 <tbody>
                     <?php
-
                     $no = 1;
                     $sql = $koneksi->query("SELECT * FROM `penduduk` JOIN `surat_kematian` ON `penduduk`.id_penduduk = `surat_kematian`.id_penduduk");
                     function hitungUsia($tanggal_lahir, $tanggal_kematian)
@@ -40,11 +39,11 @@
                         $tanggal_kematian = $data_kematian['tanggal_kematian'];
                     ?>
                         <tr>
-                            <td><?= $no ?></td>
+                            <td><?= $no++ ?></td>
                             <td><?= $data_kematian['nik_penduduk'] ?></td>
                             <td><?= $data_kematian['nama_penduduk'] ?></td>
                             <td><?= $data_kematian['jenis_kelamin_penduduk'] ?></td>
-                            <td><?= hitungUsia($tanggal_lahir, $tanggal_kematian) ?></td>
+                            <td><?= hitungUsia($tanggal_lahir, $tanggal_kematian) ?> tahun</td>
                             <td><?= $data_kematian['penyebab_kematian'] ?></td>
                             <td>
                                 <a href="?page=detail_kematian&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Detail" class="btn btn-info btn-sm">
