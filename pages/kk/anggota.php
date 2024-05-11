@@ -1,8 +1,6 @@
 <?php
 if (isset($_GET['id_kk'])) {
-    $encoded_id_kk = $_GET['id_kk'];
-    $id_kk = base64_decode($encoded_id_kk);
-
+    $id_kk = $_GET['id_kk'];
     $sql_cek = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk=penduduk.id_penduduk WHERE id_kk='$id_kk'";
     $query_cek = mysqli_query($koneksi, $sql_cek);
     $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
@@ -122,9 +120,7 @@ if (isset($_GET['id_kk'])) {
 </div>
 <?php
 if (isset($_POST['Simpan'])) {
-    $encoded_id_kk = $_GET['id_kk'];
-    $id_kk = base64_decode($encoded_id_kk);
-
+    $id_kk = $_GET['id_kk'];
     $id_penduduk = $_POST['id_pend'];
     $hub = $_POST['hubungan'];
     $query = "INSERT INTO `anggota_keluarga` (`id_anggota`, `id_kk`, `id_penduduk`, `hub_keluarga`) VALUES (NULL, '$id_kk', '$id_penduduk', '$hub')";

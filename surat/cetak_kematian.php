@@ -2,6 +2,7 @@
 require_once("../assets/lib/fpdf/fpdf.php");
 require_once("../config/connection.php");
 
+$pdf = new FPDF();
 class PDF extends FPDF
 {
     function Header()
@@ -38,12 +39,20 @@ class PDF extends FPDF
 
 $id = $_GET['id'];
 
-$query = "SELECT * FROM penduduk JOIN surat_kematian ON penduduk.id_penduduk=surat_kematian.id_penduduk WHERE surat_kematian.id_surat_kematian = '$id'";
+$query = "SELECT * FROM penduduk JOIN surat_kematian ON penduduk.id_penduduk=surat_kematian.id_penduduk WHERE surat_kematian.id_penduduk = '$id'";
 $hasil = mysqli_query($koneksi, $query);
 
+$cek_pelapor = mysqli_fetch_assoc($hasil);
+$pelapor = $cek_pelapor['pelapor'];
+
+$query = "SELECT * FROM penduduk WHERE id_penduduk = '$pelapor'";
+$cek_hasil = mysqli_query($koneksi, $query);
+$hasil_pelapor = mysqli_fetch_assoc($cek_hasil);
+
+$pdf = new PDF('P', 'mm', [210, 330]);
+$pdf->AliasNbPages();
+
 foreach ($hasil as $data_penduduk) :
-    $pdf = new PDF('P', 'mm', [210, 330]);
-    $pdf->AliasNbPages();
     $pdf->AddPage();
 
     $pdf->SetFont('Times', '', 12);
@@ -128,34 +137,40 @@ foreach ($hasil as $data_penduduk) :
     $pdf->cell(2, 7, ':', 0, 0, 'L');
     $pdf->cell(7, 7, strtoupper($data_penduduk['penyebab_kematian']), 0, 1, 'L');
 
-    $pdf->MultiCell(0, 7, 'Surat Keterangan ini dibuat untuk Keamanan', 0, 'L');
-    $pdf->MultiCell(0, 7, 'Demikian surat keterangan ini dibuat, atas perhatian dan kerjasamanya kami ucapkan terima kasih.', 0, 'L');
-
 endforeach;
-// $pdf->Cell(45, 7, 'Berdasarkan Surat Pernyataan Dari');
-// $pdf->SetX(70);
-// $pdf->Cell(5, 7, ':');
-// $pdf->Cell(80, 7, '', 0, 1, 'L');
 
-// $pdf->SetX(15);
-// $pdf->cell(45, 7, 'Agama', 0, 0, 'L');
-// $pdf->cell(2, 7, ':', 0, 0, 'L');
-// $pdf->cell(20, 7, strtoupper($data_penduduk['agama_penduduk']), 0, 1, 'L');
+$pdf->Cell(45, 7, 'Berdasarkan surat pernyataan dari');
+$pdf->SetX(68);
+$pdf->Cell(5, 7, ':');
+$pdf->Cell(80, 7, '', 0, 1, 'L');
 
-// $pdf->SetX(15);
-// $pdf->cell(45, 7, 'Pendidikan', 0, 0, 'L');
-// $pdf->cell(2, 7, ':', 0, 0, 'L');
-// $pdf->cell(16, 7, strtoupper($data_penduduk['pendidikan_terakhir_penduduk']), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Nama', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($hasil_pelapor['nama_penduduk']), 0, 20), 0, 1, 'L');
 
-// $pdf->SetX(15);
-// $pdf->cell(45, 7, 'Pekerjaan', 0, 0, 'L');
-// $pdf->cell(2, 7, ':', 0, 0, 'L');
-// $pdf->cell(20, 7, strtoupper($data_penduduk['pekerjaan_penduduk']), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'NIK', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($hasil_pelapor['nik_penduduk']), 0, 20), 0, 1, 'L');
 
-// $pdf->SetX(15);
-// $pdf->cell(45, 7, 'Kawin/Tidak Kawin', 0, 0, 'L');
-// $pdf->cell(2, 7, ':', 0, 0, 'L');
-// $pdf->cell(26, 7, strtoupper($data_penduduk['status_perkawinan_penduduk']), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Tempat / Tanggal Lahir', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($hasil_pelapor['tempat_lahir_penduduk'] . " / " . $hasil_pelapor['tanggal_lahir_penduduk']), 0, 20), 0, 1, 'L');
+
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Pekerjaan', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($hasil_pelapor['pekerjaan_penduduk']), 0, 20), 0, 1, 'L');
+
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Alamat', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($hasil_pelapor['alamat_penduduk']), 0, 20), 0, 1, 'L');
+
+$pdf->MultiCell(0, 7, 'Surat Keterangan ini dibuat untuk Keamanan', 0, 'L');
+$pdf->MultiCell(0, 7, 'Demikian surat keterangan ini dibuat, atas perhatian dan kerjasamanya kami ucapkan terima kasih.', 0, 'L');
 
 $pdf->Ln(10);
 

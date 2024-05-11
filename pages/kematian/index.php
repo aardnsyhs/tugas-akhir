@@ -6,11 +6,6 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <div>
-                <a href="?page=tambah_kematian" class="btn btn-primary">
-                    <i class="fa fa-edit"></i> Tambah Data</a>
-            </div>
-            <br>
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -49,8 +44,8 @@
                                 <a href="?page=detail_kematian&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Detail" class="btn btn-info btn-sm">
                                     <i class="fa fa-user"></i>
                                 </a>
-                                <a href="?page=edit_kematian&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Ubah" class="btn btn-success btn-sm">
-                                    <i class="fa fa-edit"></i>
+                                <a href="surat/cetak_kematian.php?id=<?= $data_kematian['id_penduduk']; ?>" title="Cetak" class="btn btn-success btn-sm" target="_blank">
+                                    <i class="fa fa-print"></i>
                                 </a>
                             </td>
                         <?php endforeach; ?>

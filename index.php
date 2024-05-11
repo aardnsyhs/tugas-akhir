@@ -139,7 +139,7 @@ include "config/connection.php";
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-file"></i>
                                 <p>
-                                    Kelola Surat
+                                    Kelola Laporan
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -147,19 +147,19 @@ include "config/connection.php";
                                 <li class="nav-item">
                                     <a href="?page=surat_kematian" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
-                                        <p>Surat Kematian</p>
+                                        <p>Laporan Surat Kematian</p>
                                     </a>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
-                                        <p>Surat Izin Tinggal</p>
+                                        <p>Laporan Surat Izin Tinggal</p>
                                     </a>
                                 </li>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-circle text-warning"></i>
-                                <p>Surat Pindah</p>
+                                <p>Laporan Surat Pindah</p>
                             </a>
                         </li>
                     </ul>
@@ -231,6 +231,17 @@ include "config/connection.php";
                                 break;
                             case 'edit_penduduk':
                                 include "pages/penduduk/edit_penduduk.php";
+                                break;
+
+                                //laporan
+                            case 'detail_laporan':
+                                include "surat/detail_laporan.php";
+                                break;
+                            case 'edit_laporan':
+                                include "surat/edit_laporan.php";
+                                break;
+                            case 'proses_kematian':
+                                include "surat/proses_kematian.php";
                                 break;
 
                                 //kematian

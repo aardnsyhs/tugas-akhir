@@ -37,8 +37,7 @@ while ($row = mysqli_fetch_assoc($hasil)) $data_kk[] = $row;
                             <td><?= $kk['k_keluarga'] ?></td>
                             <td><?= $kk['alamat_penduduk'] ?></td>
                             <td>
-                                <?php $encoded_id_kk = base64_encode($kk['id_kk']); ?>
-                                <a href="?page=anggota&id_kk=<?= $encoded_id_kk ?>" title="Anggota KK" class="btn btn-info btn-sm">
+                                <a href="?page=anggota&id_kk=<?= $kk['id_kk'] ?>" title="Anggota KK" class="btn btn-info btn-sm">
                                     <i class="fa fa-users"></i>
                                 </a>
                             </td>

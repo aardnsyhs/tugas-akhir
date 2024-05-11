@@ -1,20 +1,26 @@
 <?php
 session_start();
+include("../config/connection.php");
 if (!isset($_SESSION["username"])) {
     header("location: login.php");
     exit;
 } else {
-    $koneksi = include("../config/connection.php");
     $data_id = isset($_SESSION["id"]) ? $_SESSION["id"] : "";
     $id_role = isset($_SESSION["id_role"]) ? $_SESSION["id_role"] : "";
     $data_nama = isset($_SESSION["nama_user"]) ? $_SESSION["nama_user"] : "";
     $data_level = isset($_SESSION["status_user"]) ? $_SESSION["status_user"] : "";
 }
-include "../config/connection.php";
-$query = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk = penduduk.id_penduduk";
-$hasil = mysqli_query($koneksi, $query);
-$data_kk = [];
-while ($row = mysqli_fetch_assoc($hasil)) $data_kk[] = $row;
+
+$query = "SELECT id_penduduk, nik_penduduk FROM `penduduk` WHERE id_user = '$data_id'";
+$hasil_penduduk = mysqli_query($koneksi, $query);
+$data_penduduk = mysqli_fetch_assoc($hasil_penduduk);
+$id_penduduk = $data_penduduk['id_penduduk'];
+$nik_penduduk = $data_penduduk['nik_penduduk'];
+
+$query = "SELECT * FROM `anggota_keluarga` JOIN `penduduk` ON anggota_keluarga.id_penduduk = penduduk.id_penduduk 
+JOIN `kk` ON anggota_keluarga.id_kk = kk.id_kk 
+WHERE anggota_keluarga.id_penduduk = '$id_penduduk'";
+$data_anggota_keluarga = mysqli_query($koneksi, $query);
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,7 +92,7 @@ while ($row = mysqli_fetch_assoc($hasil)) $data_kk[] = $row;
                             </a>
                         </li>
                         <li class="nav-item has-treeview">
-                            <?php foreach ($data_kk as $kk) : ?>
+                            <?php foreach ($data_anggota_keluarga as $kk) : ?>
                                 <?php $encoded_no_kk = base64_encode($kk['no_kk']); ?>
                                 <a href="?page=anggota&no_kk=<?= $encoded_no_kk ?>" class="nav-link">
                                     <i class="nav-icon fas fa-table"></i>

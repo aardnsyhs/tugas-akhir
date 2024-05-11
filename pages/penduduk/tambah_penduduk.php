@@ -173,34 +173,43 @@ if (isset($_POST['simpan'])) {
     $tanggal_lahir_penduduk = $_POST['tanggal_lahir_penduduk'];
     $nik_penduduk = generateNIK("32", "77", "03", $tanggal_lahir_penduduk, 1);
 
-    $query = "INSERT INTO `penduduk`
-              (`id_penduduk`, `nik_penduduk`, `nama_penduduk`, `tempat_lahir_penduduk`, `tanggal_lahir_penduduk`, 
-              `jenis_kelamin_penduduk`, `alamat_penduduk`, `desa_kelurahan_penduduk`, 
-              `kecamatan_penduduk`, `kabupaten_kota_penduduk`, `provinsi_penduduk`, `negara_penduduk`, `rt_penduduk`, 
-              `rw_penduduk`, `agama_penduduk`, `pendidikan_terakhir_penduduk`, `pekerjaan_penduduk`, 
-              `status_perkawinan_penduduk`, `status`)
-              VALUES (NULL, '$nik_penduduk', '$nama_penduduk', '$tempat_lahir_penduduk', 
-              '$tanggal_lahir_penduduk', '$jenis_kelamin_penduduk',
-              '$alamat_penduduk', '$desa_kelurahan_penduduk', '$kecamatan_penduduk', '$kabupaten_kota_penduduk', 
-              '$provinsi_penduduk', '$negara_penduduk', '$rt_penduduk', '$rw_penduduk', '$agama_penduduk', 
-              '$pendidikan_terakhir_penduduk', '$pekerjaan_penduduk', '$status_perkawinan_penduduk', 'Ada')";
-    $hasil = mysqli_query($koneksi, $query);
-    if ($hasil) {
+    $pass_nik = md5($nik_penduduk);
 
-        // Membuat User
-        $pass_nik = md5($nik_penduduk);
-        $sql = "INSERT INTO user VALUES (NULL, '4', '$nama_penduduk', '$nik_penduduk', '$pass_nik', 'Penduduk')";
-        $hasil_user = mysqli_query($koneksi, $sql);
+    $sql = "INSERT INTO `user` (`id_user`, `id_role`, `nama_user`, `username`, `password`, `password_changed`, `status_user`) 
+            VALUES (NULL, '4', '$nama_penduduk', '$nik_penduduk', '$pass_nik', '0', 'Penduduk');";
+    $hasil_user = mysqli_query($koneksi, $sql);
 
-        echo "<script>
+    if ($hasil_user) {
+        $sql = "SELECT id_user FROM user WHERE username = '$nik_penduduk'";
+        $hasil_penduduk = mysqli_query($koneksi, $sql);
+        $data_penduduk = mysqli_fetch_assoc($hasil_penduduk);
+        $id_user = $data_penduduk['id_user'];
+
+
+        $query = "INSERT INTO `penduduk` (`id_penduduk`, `id_user`, `nik_penduduk`, `nama_penduduk`, 
+                                    `tempat_lahir_penduduk`, `tanggal_lahir_penduduk`, `jenis_kelamin_penduduk`, 
+                                    `alamat_penduduk`, `desa_kelurahan_penduduk`, `kecamatan_penduduk`, `kabupaten_kota_penduduk`,
+                                     `provinsi_penduduk`, `negara_penduduk`, `rt_penduduk`, `rw_penduduk`, `agama_penduduk`, 
+                                     `pendidikan_terakhir_penduduk`, `pekerjaan_penduduk`, `status_perkawinan_penduduk`, `status`) 
+                    VALUES (NULL, '$id_user', '$nik_penduduk', '$nama_penduduk', '$tempat_lahir_penduduk',
+                                    '$tanggal_lahir_penduduk', '$jenis_kelamin_penduduk',
+                                    '$alamat_penduduk', '$desa_kelurahan_penduduk', '$kecamatan_penduduk', '$kabupaten_kota_penduduk', 
+                                    '$provinsi_penduduk', '$negara_penduduk', '$rt_penduduk', '$rw_penduduk', '$agama_penduduk', 
+                                    '$pendidikan_terakhir_penduduk', '$pekerjaan_penduduk', '$status_perkawinan_penduduk', 'Ada');";
+        $hasil = mysqli_query($koneksi, $query);
+        if ($hasil) {
+
+            // Membuat User
+            echo "<script>
                 Swal.fire({title: 'Tambah Data Penduduk Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
                 }).then((result) => {if (result.value){
                     window.location = 'index.php?page=penduduk';
                     }
                 })
               </script>";
-    } else {
-        echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
+        } else {
+            echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
+        }
     }
 }
 ?>
