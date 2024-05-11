@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2024 at 11:48 PM
+-- Generation Time: May 11, 2024 at 01:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -177,6 +177,7 @@ CREATE TABLE `user` (
   `nama_user` varchar(45) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` varchar(32) NOT NULL,
+  `password_changed` int(1) NOT NULL,
   `status_user` enum('RT','RW','Penduduk','Kecamatan','Admin') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -184,12 +185,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `id_role`, `nama_user`, `username`, `password`, `status_user`) VALUES
-(1, 1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin'),
-(2, 4, 'Samid', '3277982345671953', 'c5e8401594a6c0dc5fc98a783db70f69', 'Penduduk'),
-(3, 4, 'Bagja', '3277982345671954', 'd257fd2603b028aeaf7252be8f22da6f', 'Penduduk'),
-(4, 4, 'Kusni', '3277982345671955', '5aed8989405524470a2bddaadf3c04aa', 'Penduduk'),
-(6, 4, 'arhdfbgjk', '3277030205240001', 'ddd58e02f656d557cf1c8323843d4bc2', 'Penduduk');
+INSERT INTO `user` (`id_user`, `id_role`, `nama_user`, `username`, `password`, `password_changed`, `status_user`) VALUES
+(1, 1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 0, 'Admin'),
+(2, 4, 'Samid', '3277982345671953', 'c5e8401594a6c0dc5fc98a783db70f69', 0, 'Penduduk'),
+(3, 4, 'Bagja', '3277982345671954', 'b93939873fd4923043b9dec975811f66', 1, 'Penduduk'),
+(4, 4, 'Kusni', '3277982345671955', 'a19ea7dff6ced87d8cb9c62cc7922497', 1, 'Penduduk'),
+(6, 4, 'arhdfbgjk', '3277030205240001', 'ddd58e02f656d557cf1c8323843d4bc2', 0, 'Penduduk');
 
 --
 -- Indexes for dumped tables
