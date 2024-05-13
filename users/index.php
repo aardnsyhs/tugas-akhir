@@ -123,7 +123,7 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=lapor_pindah" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>Lapor Pindah</p>
                                     </a>
@@ -180,8 +180,8 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                                 break;
 
                                 //pindah
-                            case 'tambah_pindah':
-                                include "pages/pindah/tambah_pindah.php";
+                            case 'lapor_pindah':
+                                include "pindah/lapor_pindah.php";
                                 break;
 
                                 //suket
