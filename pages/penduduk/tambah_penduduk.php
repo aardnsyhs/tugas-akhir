@@ -28,7 +28,6 @@
             </td>
         </tr>
     </table>
-
     <h3>B. Data Alamat</h3>
     <table class="table table-striped table-middle">
         <tr>
@@ -146,7 +145,6 @@
     Batal
 </a>
 <?php
-
 if (isset($_POST['simpan'])) {
     $nama_penduduk = $_POST['nama_penduduk'];
     $tempat_lahir_penduduk = $_POST['tempat_lahir_penduduk'];
