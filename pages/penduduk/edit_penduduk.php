@@ -164,6 +164,10 @@ if (isset($_GET['id_penduduk'])) {
                     else echo "<option value='Kawin'>Kawin</option>";
                     if ($data['status_perkawinan_penduduk'] === "Tidak Kawin") echo "<option value='Tidak Kawin' selected>Tidak Kawin</option>";
                     else echo "<option value='Tidak Kawin'>Tidak Kawin</option>";
+                    if ($data['status_perkawinan_penduduk'] === "Belum Kawin") echo "<option value='Belum Kawin' selected>Belum Kawin</option>";
+                    else echo "<option value='Belum Kawin'>Belum Kawin</option>";
+                    if ($data['status_perkawinan_penduduk'] === "Cerai") echo "<option value='Cerai' selected>Cerai</option>";
+                    else echo "<option value='Cerai'>Cerai</option>";
                     ?>
                 </select>
             </td>

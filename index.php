@@ -157,7 +157,7 @@ include "config/connection.php";
                                 </li>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="?page=surat_pindah" class="nav-link">
                                 <i class="nav-icon far fa-circle text-warning"></i>
                                 <p>Laporan Surat Pindah</p>
                             </a>
@@ -233,15 +233,26 @@ include "config/connection.php";
                                 include "pages/penduduk/edit_penduduk.php";
                                 break;
 
-                                //laporan
-                            case 'detail_laporan':
-                                include "surat/detail_laporan.php";
+                                //laporan Kematian
+                            case 'detail_laporan_kematian':
+                                include "surat/detail_laporan_kematian.php";
                                 break;
-                            case 'edit_laporan':
-                                include "surat/edit_laporan.php";
+                            case 'edit_laporan_kematian':
+                                include "surat/edit_laporan_kematian.php";
                                 break;
                             case 'proses_kematian':
                                 include "surat/proses_kematian.php";
+                                break;
+
+                                //laporan Pindah
+                            case 'detail_laporan_pindah':
+                                include "surat/detail_laporan_pindah.php";
+                                break;
+                            case 'edit_laporan_pindah':
+                                include "surat/edit_laporan_pindah.php";
+                                break;
+                            case 'proses_pindah':
+                                include "surat/proses_pindah.php";
                                 break;
 
                                 //kematian
@@ -265,14 +276,11 @@ include "config/connection.php";
                             case 'pindah':
                                 include "pages/pindah/index.php";
                                 break;
-                            case 'tambah_pindah':
-                                include "pages/pindah/tambah_pindah.php";
+                            case 'detail_pindah':
+                                include "pages/pindah/detail_pindah.php";
                                 break;
-                            case 'edit-pindah':
-                                include "admin/pindah/edit_pindah.php";
-                                break;
-                            case 'del-pindah':
-                                include "admin/pindah/del_pindah.php";
+                            case 'edit_pindah':
+                                include "pages/pindah/edit_pindah.php";
                                 break;
 
                                 //suket
@@ -282,8 +290,8 @@ include "config/connection.php";
                             case 'surat_kematian':
                                 include "surat/surat_kematian.php";
                                 break;
-                            case 'suket-pindah':
-                                include "surat/suket_pindah.php";
+                            case 'surat_pindah':
+                                include "surat/surat_pindah.php";
                                 break;
 
                                 //default

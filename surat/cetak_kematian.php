@@ -8,7 +8,6 @@ class PDF extends FPDF
     function Header()
     {
         $this->Image('../assets/dist/img/logokotacimahi.png', 20, 10, 24, 24);
-
         $this->SetFont('Times', 'B', 15);
         $this->Cell(200, 8, 'PEMERINTAH KOTA CIMAHI', 0, 1, 'C');
         $this->Cell(200, 8, 'KECAMATAN CIMAHI UTARA', 0, 1, 'C');
@@ -27,13 +26,6 @@ class PDF extends FPDF
         $this->Ln(10);
 
         $this->SetFont('Times', 'B', 9.5);
-    }
-
-    function Footer()
-    {
-        $this->SetY(-15);
-        $this->SetFont('Arial', 'I', 8);
-        $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 }
 
@@ -60,7 +52,7 @@ foreach ($hasil as $data_penduduk) :
     $nomor = 1;
 
     $pdf->Ln();
-    $pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Kepala Dukcapil Cimahi, Kecamatan Cimahi Utara, Kota Cimahi menerangkan dengan sebenarnya bahwa : ', 0, 'L');
+    $pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Lurah Cibabat, Kecamatan Cimahi Utara, Kota Cimahi menerangkan dengan sebenarnya bahwa : ', 0, 'L');
 
     $pdf->SetX(15);
     $pdf->cell(45, 7, 'Nama', 0, 0, 'L');
@@ -172,6 +164,44 @@ $pdf->cell(80, 7, substr(strtoupper($hasil_pelapor['alamat_penduduk']), 0, 20), 
 $pdf->MultiCell(0, 7, 'Surat Keterangan ini dibuat untuk Keamanan', 0, 'L');
 $pdf->MultiCell(0, 7, 'Demikian surat keterangan ini dibuat, atas perhatian dan kerjasamanya kami ucapkan terima kasih.', 0, 'L');
 
-$pdf->Ln(10);
+$pdf->SetY($pdf->GetY() + 20);
+
+// Atur Tanggal Hari ini
+$bulan = [
+    1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 
+    6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 
+    10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+];
+
+$hari = date('d');
+$month = $bulan[(int)date('m')];
+$tahun = date('Y');
+
+$tanggal_sekarang = $hari . ' ' . $month . ' ' . $tahun;
+
+$pdf->SetX(15);
+$pdf->cell(160, 7, 'Cibabat, ' . $tanggal_sekarang, 0, 0, 'R');
+
+$pdf->Ln(5);
+
+$pdf->SetX(17);
+$pdf->Cell(160, 7, 'An.LURAH CIBABAT', 0, 0, 'R');
+
+$pdf->Ln(5);
+
+$posX = 140;
+$posY = $pdf->GetY();
+$width = 40;
+$height = 30;
+
+$pdf->Image('../assets/dist/img/ttd.png', $posX, $posY, $width, $height);
+
+$pdf->Ln(13);
+$pdf->SetX(17);
+$pdf->Cell(150, 7, 'Nama Lurah', 0, 0, 'R');
+
+$pdf->SetX(17);
+$pdf->Cell(166, 7, '_________________________', 0, 0, 'R');
+
 
 $pdf->Output();

@@ -39,17 +39,14 @@
                             <td><?= $data_kematian['jenis_kelamin_penduduk'] ?></td>
                             <td><?= hitungUsia($tanggal_lahir, $tanggal_kematian) ?> tahun</td>
                             <td>
-                                <a href="?page=detail_laporan&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Detail" class="btn btn-info btn-sm">
+                                <a href="?page=detail_laporan_kematian&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Detail" class="btn btn-info btn-sm">
                                     <i class="fa fa-user"></i>
                                 </a>
-                                <a href="?page=edit_laporan&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Ubah" class="btn btn-warning btn-sm">
+                                <a href="?page=edit_laporan_kematian&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Ubah" class="btn btn-warning btn-sm">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a href="?page=proses_kematian&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Setujui" class="btn btn-success btn-sm">
                                     <i class="fa fa-check"></i>
-                                </a>
-                                <a href="?page=edit_kematian&id_penduduk=<?= $data_kematian['id_penduduk']; ?>" title="Tidak Disetujui" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-close"></i>
                                 </a>
                             </td>
                         <?php endforeach; ?>

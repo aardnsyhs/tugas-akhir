@@ -1,8 +1,8 @@
 <?php
-
 if (isset($_GET['id_anggota'])) {
-    $sql_hapus = "DELETE FROM anggota_keluarga WHERE id_anggota='" . $_GET['id_anggota'] . "'";
-    $query_hapus = mysqli_query($koneksi, $sql_hapus);
+    $sql = "DELETE FROM anggota_keluarga WHERE id_anggota='" . $_GET['id_anggota'] . "'";
+    $sql = "UPDATE penduduk JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_penduduk SET penduduk.status_keluarga='Belum Berkeluarga' WHERE anggota_keluarga.id_anggota='" . $_GET['id_anggota'] . "'";
+    $query_hapus = mysqli_query($koneksi, $sql);
     $kode = $_GET['id_anggota'];
     if ($query_hapus) {
         echo "<script>

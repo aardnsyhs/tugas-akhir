@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../config/connection.php");
+include("../function/function.php");
 if (!isset($_SESSION["username"])) {
     header("location: login.php");
     exit;
@@ -123,11 +124,14 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="?page=lapor_pindah" class="nav-link">
-                                        <i class="nav-icon far fa-circle text-warning"></i>
-                                        <p>Lapor Pindah</p>
-                                    </a>
+                                    <?php foreach ($data_anggota_keluarga as $kk) : ?>
+                                        <?php $encoded_no_kk = encrypt($kk['no_kk']); ?>
+                                        <a href="?page=lapor_pindah&no_kk=<?= $encoded_no_kk ?>" class="nav-link">
+                                            <i class="nav-icon far fa-circle text-warning"></i>
+                                            <p>Lapor Pindah</p>
+                                        </a>
                                 </li>
+                            <?php endforeach ?>
                         </li>
                     </ul>
                     </li>
@@ -182,6 +186,9 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                                 //pindah
                             case 'lapor_pindah':
                                 include "pindah/lapor_pindah.php";
+                                break;
+                            case 'hapus_anggota_pindah':
+                                include "pindah/hapus_anggota_pindah.php";
                                 break;
 
                                 //suket

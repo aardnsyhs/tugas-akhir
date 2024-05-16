@@ -28,7 +28,6 @@
             </td>
         </tr>
     </table>
-
     <h3>B. Data Alamat</h3>
     <table class="table table-striped table-middle">
         <tr>
@@ -146,7 +145,6 @@
     Batal
 </a>
 <?php
-
 if (isset($_POST['simpan'])) {
     $nama_penduduk = $_POST['nama_penduduk'];
     $tempat_lahir_penduduk = $_POST['tempat_lahir_penduduk'];
@@ -185,20 +183,24 @@ if (isset($_POST['simpan'])) {
         $data_penduduk = mysqli_fetch_assoc($hasil_penduduk);
         $id_user = $data_penduduk['id_user'];
 
-
-        $query = "INSERT INTO `penduduk` (`id_penduduk`, `id_user`, `nik_penduduk`, `nama_penduduk`, 
-                                    `tempat_lahir_penduduk`, `tanggal_lahir_penduduk`, `jenis_kelamin_penduduk`, 
-                                    `alamat_penduduk`, `desa_kelurahan_penduduk`, `kecamatan_penduduk`, `kabupaten_kota_penduduk`,
-                                     `provinsi_penduduk`, `negara_penduduk`, `rt_penduduk`, `rw_penduduk`, `agama_penduduk`, 
-                                     `pendidikan_terakhir_penduduk`, `pekerjaan_penduduk`, `status_perkawinan_penduduk`, `status`) 
+        $query = "INSERT INTO `penduduk`
                     VALUES (NULL, '$id_user', '$nik_penduduk', '$nama_penduduk', '$tempat_lahir_penduduk',
                                     '$tanggal_lahir_penduduk', '$jenis_kelamin_penduduk',
                                     '$alamat_penduduk', '$desa_kelurahan_penduduk', '$kecamatan_penduduk', '$kabupaten_kota_penduduk', 
                                     '$provinsi_penduduk', '$negara_penduduk', '$rt_penduduk', '$rw_penduduk', '$agama_penduduk', 
-                                    '$pendidikan_terakhir_penduduk', '$pekerjaan_penduduk', '$status_perkawinan_penduduk', 'Ada');";
+                                    '$pendidikan_terakhir_penduduk', '$pekerjaan_penduduk', '$status_perkawinan_penduduk', 'Ada', 'Belum Berkeluarga')";
+
+        $query = "SELECT id_penduduk, alamat_penduduk, rt_penduduk, rw_penduduk, desa_kelurahan_penduduk, kecamatan_penduduk, kabupaten_kota_penduduk, provinsi_penduduk FROM penduduk JOIN user ON penduduk.id_user=user.id_user WHERE user.id_user='$id_user'";
+        $cek_id_penduduk = mysqli_query($koneksi, $query);
+        $hasil = mysqli_fetch_assoc($cek_id_penduduk);
+        $id_penduduk = $hasil['id_penduduk'];      
+
+        var_dump($id_penduduk);
+        die();
+
+        $query = "INSERT INTO riwayat_tinggal VALUES (NULL, '$id_penduduk', )";
         $hasil = mysqli_query($koneksi, $query);
         if ($hasil) {
-
             // Membuat User
             echo "<script>
                 Swal.fire({title: 'Tambah Data Penduduk Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'

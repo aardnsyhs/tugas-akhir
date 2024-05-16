@@ -1,6 +1,6 @@
 <?php
 $get_id_penduduk = $_GET['id_penduduk'];
-$query = "SELECT * FROM `penduduk` JOIN `surat_kematian` ON `penduduk`.id_penduduk = `surat_kematian`.id_penduduk WHERE `surat_kematian`.id_penduduk = '$get_id_penduduk'";
+$query = "SELECT * FROM `penduduk` JOIN `surat_kematian_temp` ON `penduduk`.id_penduduk = `surat_kematian_temp`.id_penduduk WHERE `surat_kematian_temp`.id_penduduk = '$get_id_penduduk'";
 $hasil = mysqli_query($koneksi, $query);
 $data_kematian = array();
 while ($row = mysqli_fetch_assoc($hasil)) {
@@ -71,7 +71,7 @@ $tanggal_kematian = $data_kematian[0]['tanggal_kematian'];
         <td><?= $data_kematian[0]['tempat_kematian'] ?></td>
     </tr>
 </table>
-<a href="index.php?page=kematian" class="btn btn-warning">
+<a href="index.php?page=surat_kematian" class="btn btn-warning">
     <i class="fa-solid fa-xmark"></i>
     Kembali
 </a>

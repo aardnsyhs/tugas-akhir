@@ -37,7 +37,7 @@ if (isset($_GET['id_kk'])) {
                     <select name="id_pend" id="id_pend" class="form-control select2bs4" required>
                         <option selected="selected">- Penduduk -</option>
                         <?php
-                        $query = "SELECT * FROM `penduduk`";
+                        $query = "SELECT * FROM `penduduk` WHERE status_keluarga='Belum Berkeluarga'";
                         $hasil = mysqli_query($koneksi, $query);
                         while ($row = mysqli_fetch_array($hasil)) {
                         ?>
@@ -82,7 +82,7 @@ if (isset($_GET['id_kk'])) {
                             <?php
                             $sql = $koneksi->query("SELECT p.nik_penduduk, p.nama_penduduk, p.jenis_kelamin_penduduk, a.hub_keluarga, a.id_anggota 
 			  										FROM penduduk p JOIN anggota_keluarga a ON p.id_penduduk=a.id_penduduk
-													WHERE status='Ada' AND id_kk=$karkel");
+													WHERE status='Ada' AND id_kk=$karkel AND status_keluarga='Sudah Berkeluarga'");
                             while ($data = $sql->fetch_assoc()) {
                             ?>
                                 <tr>
@@ -123,7 +123,9 @@ if (isset($_POST['Simpan'])) {
     $id_kk = $_GET['id_kk'];
     $id_penduduk = $_POST['id_pend'];
     $hub = $_POST['hubungan'];
-    $query = "INSERT INTO `anggota_keluarga` (`id_anggota`, `id_kk`, `id_penduduk`, `hub_keluarga`) VALUES (NULL, '$id_kk', '$id_penduduk', '$hub')";
+    $query = "INSERT INTO `anggota_keluarga` VALUES (NULL, '$id_kk', '$id_penduduk', '$hub')";
+    $hasil = mysqli_query($koneksi, $query);
+    $query = "UPDATE penduduk SET status_keluarga = 'Sudah Berkeluarga'";
     $hasil = mysqli_query($koneksi, $query);
     mysqli_close($koneksi);
 
