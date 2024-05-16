@@ -35,37 +35,65 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
         <tr>
             <th width="20%">Alamat Penduduk Baru</th>
             <td width="1%">:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="alamat_baru" required></td>
+=======
+            <td><input type="text" class="form-control" name="alamat_baru"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
             <th>RT</th>
             <td>:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="rt_baru" required></td>
+=======
+            <td><input type="text" class="form-control" name="rt_baru"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
             <th>RW</th>
             <td>:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="rw_baru" required></td>
+=======
+            <td><input type="text" class="form-control" name="rw_baru"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
             <th>Desa/Kelurahan</th>
             <td>:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="desa_kelurahan_baru" required></td>
+=======
+            <td><input type="text" class="form-control" name="desa_kelurahan_baru"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
             <th>Kecamatan</th>
             <td>:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="kecamatan_baru" required></td>
+=======
+            <td><input type="text" class="form-control" name="kecamatan_baru"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
             <th>Kabupaten/Kota</th>
             <td>:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="kabupaten_kota_baru" required></td>
+=======
+            <td><input type="text" class="form-control" name="kabupaten_kota_baru"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
             <th>Provinsi</th>
             <td>:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="provinsi_baru" required></td>
+=======
+            <td><input type="text" class="form-control" name="provinsi_baru"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
     </table>
@@ -74,11 +102,16 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
         <tr>
             <th width="20%">Alasan Pindah</th>
             <td width="1%">:</td>
+<<<<<<< HEAD
             <td><input type="text" class="form-control" name="alasan_pindah" required></td>
+=======
+            <td><input type="text" class="form-control" name="alasan_pindah"></td>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
         </tr>
         <tr>
             <td>
                 <div class="form-group row">
+<<<<<<< HEAD
                     <label class="form-label">Anggota Keluarga</label>
                     <div>
                         <select name="id_penduduk" id="id_penduduk" class="form-control select2bs4" required>
@@ -96,15 +129,41 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
                             <?php } ?>
                         </select>
                         <input type="submit" name="Simpan" value="Tambah" class="btn btn-primary mt-2">
+=======
+                    <label class="col-form-label">Anggota Keluarga</label>
+                    <div class="w-100 d-flex">
+                        <select name="id_pend" id="id_pend" class="form-control select2bs4" required>
+                            <option selected="selected">- Anggota Keluarga -</option>
+                            <?php
+                            $query = "SELECT * FROM `penduduk`";
+                            $hasil = mysqli_query($koneksi, $query);
+                            while ($row = mysqli_fetch_array($hasil)) {
+                            ?>
+                                <option value="<?= $row['id_penduduk'] ?>">
+                                    <?= $row['nik_penduduk'] ?>
+                                    -
+                                    <?= $row['nama_penduduk'] ?>
+                                </option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                        <input type="submit" name="Simpan" value="Tambah" class="btn btn-primary ml-5">
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
                     </div>
                 </div>
             </td>
         </tr>
+<<<<<<< HEAD
         <table class="table table-striped table-hover">
+=======
+        <table class="table table-striped table-condensed table-middle table-hover mt-2 align-items-center justify-content-center mx-auto">
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
             <thead>
                 <tr>
                     <th>No</th>
                     <th>NIK</th>
+<<<<<<< HEAD
                     <th>Nama Penduduk Pindah</th>
                     <th>Aksi</th>
                 </tr>
@@ -134,6 +193,18 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
                 <?php
                 }
                 ?>
+=======
+                    <th>Nama Lengkap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $nomor = 1; ?>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
             </tbody>
         </table>
     </table>
@@ -143,6 +214,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
     </button>
 </form>
 <?php
+<<<<<<< HEAD
 if (isset($_POST['Simpan'])) {
     $encoded_no_kk = $_GET['no_kk'];
     $no_kk = decrypt($encoded_no_kk);
@@ -171,6 +243,9 @@ if (isset($_POST['Simpan'])) {
     }
 } elseif (isset($_POST['Laporkan'])) {
     $alamat_baru = $_POST['alamat_baru'];
+=======
+if (isset($_POST['Laporkan'])) {
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
     $rt_baru = $_POST['rt_baru'];
     $rw_baru = $_POST['rw_baru'];
     $desa_kelurahan_baru = $_POST['desa_kelurahan_baru'];
@@ -178,6 +253,7 @@ if (isset($_POST['Simpan'])) {
     $kabupaten_kota_baru = $_POST['kabupaten_kota_baru'];
     $provinsi_baru = $_POST['provinsi_baru'];
     $alasan_pindah = $_POST['alasan_pindah'];
+<<<<<<< HEAD
 
     $query = "SELECT id_penduduk FROM `penduduk` WHERE id_user = '$data_id'";
     $hasil_penduduk = mysqli_query($koneksi, $query);
@@ -202,4 +278,6 @@ if (isset($_POST['Simpan'])) {
           }
       })</script>";
     }
+=======
+>>>>>>> e1d02a7baf5018320e73ca8c3e6fb2d549c9589c
 }
