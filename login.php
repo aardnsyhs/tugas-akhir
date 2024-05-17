@@ -96,7 +96,7 @@ if (isset($_POST['btnLogin'])) {
                 }).then((result) => {if (result.value)
                     {window.location = 'index.php';}
                 })</script>";
-        } elseif ($_SESSION['id_role'] === '4') {
+        } elseif ($_SESSION['id_role'] === '2') {
             echo "<script>
                 Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
                 }).then((result) => {if (result.value)

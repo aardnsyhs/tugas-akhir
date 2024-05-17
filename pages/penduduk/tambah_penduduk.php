@@ -174,7 +174,7 @@ if (isset($_POST['simpan'])) {
     $pass_nik = md5($nik_penduduk);
 
     $sql = "INSERT INTO `user` (`id_user`, `id_role`, `nama_user`, `username`, `password`, `password_changed`, `status_user`) 
-            VALUES (NULL, '4', '$nama_penduduk', '$nik_penduduk', '$pass_nik', '0', 'Penduduk');";
+            VALUES (NULL, '2', '$nama_penduduk', '$nik_penduduk', '$pass_nik', '0', 'Penduduk');";
     $hasil_user = mysqli_query($koneksi, $sql);
 
     if ($hasil_user) {
@@ -184,21 +184,22 @@ if (isset($_POST['simpan'])) {
         $id_user = $data_penduduk['id_user'];
 
         $query = "INSERT INTO `penduduk`
-                    VALUES (NULL, '$id_user', '$nik_penduduk', '$nama_penduduk', '$tempat_lahir_penduduk',
-                                    '$tanggal_lahir_penduduk', '$jenis_kelamin_penduduk',
-                                    '$alamat_penduduk', '$desa_kelurahan_penduduk', '$kecamatan_penduduk', '$kabupaten_kota_penduduk', 
-                                    '$provinsi_penduduk', '$negara_penduduk', '$rt_penduduk', '$rw_penduduk', '$agama_penduduk', 
-                                    '$pendidikan_terakhir_penduduk', '$pekerjaan_penduduk', '$status_perkawinan_penduduk', 'Ada', 'Belum Berkeluarga')";
+         VALUES (NULL, '$id_user', '$nik_penduduk', '$nama_penduduk', '$tempat_lahir_penduduk',
+                 '$tanggal_lahir_penduduk', '$jenis_kelamin_penduduk',
+                 '$alamat_penduduk', '$desa_kelurahan_penduduk', '$kecamatan_penduduk', '$kabupaten_kota_penduduk', 
+                 '$provinsi_penduduk', '$negara_penduduk', '$rt_penduduk', '$rw_penduduk', '$agama_penduduk', 
+                 '$pendidikan_terakhir_penduduk', '$pekerjaan_penduduk', '$status_perkawinan_penduduk', 'Ada', 'Belum Berkeluarga')";
+        $hasil = mysqli_query($koneksi, $query);
 
-        $query = "SELECT id_penduduk, alamat_penduduk, rt_penduduk, rw_penduduk, desa_kelurahan_penduduk, kecamatan_penduduk, kabupaten_kota_penduduk, provinsi_penduduk FROM penduduk JOIN user ON penduduk.id_user=user.id_user WHERE user.id_user='$id_user'";
+        $query = "SELECT id_penduduk, alamat_penduduk, rt_penduduk, rw_penduduk, desa_kelurahan_penduduk, kecamatan_penduduk, kabupaten_kota_penduduk, provinsi_penduduk 
+         FROM penduduk 
+         JOIN user ON penduduk.id_user=user.id_user 
+         WHERE user.id_user='$id_user'";
         $cek_id_penduduk = mysqli_query($koneksi, $query);
         $hasil = mysqli_fetch_assoc($cek_id_penduduk);
-        $id_penduduk = $hasil['id_penduduk'];      
+        $id_penduduk = $hasil['id_penduduk'];
 
-        var_dump($id_penduduk);
-        die();
-
-        $query = "INSERT INTO riwayat_tinggal VALUES (NULL, '$id_penduduk', )";
+        $query = "INSERT INTO riwayat_tinggal VALUES (NULL, '$id_penduduk', '$alamat_penduduk', '$rt_penduduk', '$rw_penduduk', '$desa_kelurahan_penduduk', '$kecamatan_penduduk', '$kabupaten_kota_penduduk', '$provinsi_penduduk')";
         $hasil = mysqli_query($koneksi, $query);
         if ($hasil) {
             // Membuat User

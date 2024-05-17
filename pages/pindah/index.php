@@ -23,7 +23,7 @@
                     foreach ($sql as $data_pindah) :
                     ?>
                         <tr>
-                            <td><?= $no ?></td>
+                            <td><?= $no++ ?></td>
                             <td><?= $data_pindah['nik_penduduk'] ?></td>
                             <td><?= $data_pindah['nama_penduduk'] ?></td>
                             <td><?= $data_pindah['jenis_kelamin_penduduk'] ?></td>

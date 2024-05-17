@@ -125,7 +125,7 @@ if (isset($_POST['Simpan'])) {
     $hub = $_POST['hubungan'];
     $query = "INSERT INTO `anggota_keluarga` VALUES (NULL, '$id_kk', '$id_penduduk', '$hub')";
     $hasil = mysqli_query($koneksi, $query);
-    $query = "UPDATE penduduk SET status_keluarga = 'Sudah Berkeluarga'";
+    $query = "UPDATE penduduk SET status_keluarga = 'Sudah Berkeluarga' WHERE id_penduduk='$id_penduduk'";
     $hasil = mysqli_query($koneksi, $query);
     mysqli_close($koneksi);
 

@@ -6,7 +6,7 @@ if (isset($_GET['no_kk'])) {
     $sql_cek = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk=penduduk.id_penduduk WHERE no_kk='$no_kk'";
     $query_cek = mysqli_query($koneksi, $sql_cek);
     $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-    $karkel = $data_cek['no_kk'];
+    $karkel = encrypt($data_cek['no_kk']);
 }
 $sql = "SELECT * FROM penduduk WHERE nama_penduduk='$data_nama'";
 $cek_penduduk = mysqli_query($koneksi, $sql);
@@ -87,7 +87,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
                             $sql = $koneksi->query("SELECT p.nik_penduduk, p.nama_penduduk, p.id_penduduk, a.id_anggota 
                             FROM penduduk p 
                             JOIN anggota_keluarga a ON p.id_penduduk = a.id_penduduk
-                            WHERE a.id_kk IN (SELECT id_kk FROM kk WHERE no_kk = '$karkel')");
+                            WHERE a.id_kk IN (SELECT id_kk FROM kk WHERE no_kk = '$no_kk') AND status='Ada'");
                             while ($data = $sql->fetch_assoc()) {
                             ?>
                                 <option value="<?= $data['id_penduduk'] ?>">
@@ -112,7 +112,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
             <tbody>
                 <?php
                 $no = 1;
-                $sql = $koneksi->query("SELECT * FROM anggota_keluarga_pindah JOIN penduduk ON anggota_keluarga_pindah.id_penduduk=penduduk.id_penduduk");
+                $sql = $koneksi->query("SELECT * FROM penduduk JOIN anggota_keluarga_pindah ON anggota_keluarga_pindah.id_penduduk=penduduk.id_penduduk JOIN kk ON penduduk.id_penduduk=kk.id_penduduk WHERE kk.no_kk='$karkel'");
                 while ($data = $sql->fetch_assoc()) {
                 ?>
                     <tr>
@@ -189,16 +189,16 @@ if (isset($_POST['Simpan'])) {
 
     if ($query_simpan) {
         echo "<script>
-      Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
+      Swal.fire({title: 'Tambah Laporan Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {if (result.value){
-          window.location = 'index.php?page=lapor_pindah';
+          window.location = 'index.php?page=lapor_pindah&no_kk=" . encrypt($no_kk) . "';
           }
       })</script>";
     } else {
         echo "<script>
-      Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
+      Swal.fire({title: 'Tambah Laporan Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {if (result.value){
-          window.location = 'index.php?page=lapor_pindah';
+          window.location = 'index.php?page=lapor_pindah&no_kk=" . encrypt($no_kk) . "';
           }
       })</script>";
     }

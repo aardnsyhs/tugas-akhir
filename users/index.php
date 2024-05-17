@@ -208,7 +208,7 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                                 break;
                         }
                     } else {
-                        if ($id_role == "4") {
+                        if ($id_role == "2") {
                             include "home/index.php";
                         }
                     }
