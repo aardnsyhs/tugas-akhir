@@ -8,7 +8,6 @@
     <title>Login | Tugas Akhir </title>
     <link rel="icon" href="assets/dist/img/penduduk.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
@@ -71,7 +70,12 @@ if (isset($_POST['btnLogin'])) {
     $username = mysqli_real_escape_string($koneksi, $_POST['username']);
     $password = mysqli_real_escape_string($koneksi, md5($_POST['password']));
 
-    $sql_login = "SELECT * FROM `user` JOIN `role` ON role.id_role=user.id_role WHERE BINARY username='$username' AND password='$password'";
+    $sql_login = "SELECT *
+    FROM `user`
+    JOIN `role` ON role.id_role = user.id_role
+    JOIN `penduduk` ON user.id_user = penduduk.id_user
+    LEFT JOIN `anggota_keluarga` ON penduduk.id_penduduk = anggota_keluarga.id_penduduk
+    WHERE BINARY username = '$username' AND password = '$password'";
     $query_login = mysqli_query($koneksi, $sql_login);
     $data_login = mysqli_fetch_array($query_login, MYSQLI_BOTH);
     $jumlah_login = mysqli_num_rows($query_login);
@@ -80,6 +84,7 @@ if (isset($_POST['btnLogin'])) {
         session_start();
         $_SESSION["id"] = $data_login["id_user"];
         $_SESSION["id_role"] = $data_login["id_role"];
+        $_SESSION['id_kk'] = $data_login['id_kk'];
         $_SESSION["nama_user"] = $data_login["nama_user"];
         $_SESSION["username"] = $data_login["username"];
         $_SESSION["password"] = $data_login["password"];
@@ -92,23 +97,22 @@ if (isset($_POST['btnLogin'])) {
 
         if ($_SESSION['id_role'] === '1') {
             echo "<script>
-                Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
-                }).then((result) => {if (result.value)
-                    {window.location = 'index.php';}
-                })</script>";
-        } elseif ($_SESSION['id_role'] === '4') {
+                    Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
+                    }).then((result) => {if (result.value)
+                        {window.location = 'index.php';}
+                    })</script>";
+        } elseif ($_SESSION['id_role'] === '2') {
             echo "<script>
-                Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
-                }).then((result) => {if (result.value)
-                    {window.location = 'users/index.php';}
-                })</script>";
+                    Swal.fire({title: 'Login Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
+                    }).then((result) => {if (result.value)
+                        {window.location = 'users/index.php';}
+                    })</script>";
         }
     } else {
         echo "<script>
-            Swal.fire({title: 'Login Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
-            }).then((result) => {if (result.value)
-                {window.location = 'login.php';}
-            })</script>";
+                Swal.fire({title: 'Login Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
+                }).then((result) => {if (result.value)
+                    {window.location = 'login.php';}
+                })</script>";
     }
 }
-?>

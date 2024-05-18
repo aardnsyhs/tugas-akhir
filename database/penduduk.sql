@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2024 at 04:22 AM
+-- Generation Time: May 17, 2024 at 11:26 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,11 +39,14 @@ CREATE TABLE `anggota_keluarga` (
 --
 
 INSERT INTO `anggota_keluarga` (`id_anggota`, `id_kk`, `id_penduduk`, `hub_keluarga`) VALUES
-(19, 1, 7, 'Anak'),
-(21, 2, 8, 'Anak'),
-(22, 1, 11, 'Anak'),
-(23, 1, 9, 'Famili Lain'),
-(25, 2, 13, 'Kepala Keluarga');
+(1, 1, 2, 'Kepala Keluarga'),
+(2, 1, 3, 'Istri'),
+(3, 1, 1, 'Anak'),
+(4, 1, 4, 'Anak'),
+(5, 1, 5, 'Anak'),
+(6, 2, 6, 'Kepala Keluarga'),
+(7, 2, 7, 'Istri'),
+(8, 2, 8, 'Anak');
 
 -- --------------------------------------------------------
 
@@ -74,8 +77,8 @@ CREATE TABLE `kk` (
 --
 
 INSERT INTO `kk` (`id_kk`, `no_kk`, `id_penduduk`, `k_keluarga`) VALUES
-(1, '3277098734467891', 6, 'Samid'),
-(2, '3277098734467892', 13, 'Abdul');
+(1, '3277036654786129', 2, 'Akung'),
+(2, '3277035876112385', 6, 'Musnar Karsi');
 
 -- --------------------------------------------------------
 
@@ -102,24 +105,56 @@ CREATE TABLE `penduduk` (
   `agama_penduduk` enum('Islam','Kristen','Katolik','Hindu','Buddha','Konghucu') NOT NULL,
   `pendidikan_terakhir_penduduk` varchar(20) NOT NULL,
   `pekerjaan_penduduk` varchar(20) NOT NULL,
-  `status_perkawinan_penduduk` enum('Kawin','Tidak Kawin') NOT NULL,
-  `status` enum('Ada','Meninggal','Pindah','Izin Tinggal') NOT NULL
+  `status_perkawinan_penduduk` enum('Kawin','Tidak Kawin','Belum Kawin','Cerai') NOT NULL,
+  `status` enum('Ada','Meninggal','Pindah','Izin Tinggal') NOT NULL,
+  `status_keluarga` enum('Sudah Berkeluarga','Belum Berkeluarga','','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `penduduk`
 --
 
-INSERT INTO `penduduk` (`id_penduduk`, `id_user`, `nik_penduduk`, `nama_penduduk`, `tempat_lahir_penduduk`, `tanggal_lahir_penduduk`, `jenis_kelamin_penduduk`, `alamat_penduduk`, `desa_kelurahan_penduduk`, `kecamatan_penduduk`, `kabupaten_kota_penduduk`, `provinsi_penduduk`, `negara_penduduk`, `rt_penduduk`, `rw_penduduk`, `agama_penduduk`, `pendidikan_terakhir_penduduk`, `pekerjaan_penduduk`, `status_perkawinan_penduduk`, `status`) VALUES
-(6, 2, '3277982345671953', 'Samid', 'Bandung', '2003-07-22', 'Laki-Laki', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '3', '5', 'Islam', 'SD', 'Programmer', 'Kawin', 'Ada'),
-(7, 3, '3277982345671954', 'Bagja', 'Cimahi', '2000-09-07', 'Laki-Laki', 'Jl Kolmas', 'Cipageran', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '6', '4', 'Islam', 'S1', 'Bekerja', 'Tidak Kawin', 'Ada'),
-(8, 4, '3277982345671955', 'Kusni', 'Cimahi', '2013-09-19', 'Perempuan', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '3', '5', 'Islam', 'SD', 'Belum Bekerja', 'Tidak Kawin', 'Ada'),
-(9, 8, '3277982345671955', 'Tes', 'Cimahi', '2004-05-06', 'Laki-Laki', 'tes', 'tes', 'tes', 'tes', 'tes', 'WNI', '6', '9', 'Konghucu', 'D1', 'tes', 'Tidak Kawin', 'Meninggal'),
-(11, 7, '3277030911060001', 'Mantap', 'ghjghj', '2006-11-09', 'Laki-Laki', 'ghjgh', 'ghj', 'ghj', 'ghj', 'ghj', 'WNI', '6', '8', 'Islam', 'D2', 'fsg', 'Tidak Kawin', 'Meninggal'),
-(12, 0, '3277031105240001', 'dhdvfh', 'jhsvah', '2024-05-11', 'Laki-Laki', 'zsddfb', 'dfbfd', 'dfbfd', 'dfbfdb', 'dfbdfbfdb', 'WNI', '4', '5', 'Islam', 'Tidak Sekolah', '-', 'Tidak Kawin', 'Ada'),
-(13, 9, '3277031707150001', 'Abdul', 'Cimahi', '2015-07-17', 'Perempuan', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '3', 'Islam', 'SD', '-', '', 'Ada'),
-(14, 0, '3277031105240001', 'jfajfquvu', 'hwefvwejhfv', '2024-05-11', 'Perempuan', 'aregesr', 'thrth', 'w4teerg', 'gfnfgn', 'wefwrg', 'WNI', '6', '3', '', 'Tidak Sekolah', '-', '', 'Ada'),
-(15, 0, '3277030205240001', 'arhdfbgjk', 'hdbgksjbg', '2024-05-02', 'Perempuan', 'adhvahjf', 'whjegbwejg', 'jhwbgw', 'hwegbwegb', 'jehgbwheg', 'WNI', '6', '3', '', 'Tidak Sekolah', '-', 'Tidak Kawin', 'Ada');
+INSERT INTO `penduduk` (`id_penduduk`, `id_user`, `nik_penduduk`, `nama_penduduk`, `tempat_lahir_penduduk`, `tanggal_lahir_penduduk`, `jenis_kelamin_penduduk`, `alamat_penduduk`, `desa_kelurahan_penduduk`, `kecamatan_penduduk`, `kabupaten_kota_penduduk`, `provinsi_penduduk`, `negara_penduduk`, `rt_penduduk`, `rw_penduduk`, `agama_penduduk`, `pendidikan_terakhir_penduduk`, `pekerjaan_penduduk`, `status_perkawinan_penduduk`, `status`, `status_keluarga`) VALUES
+(1, 2, '3277032110060001', 'Ardiansyah Sulistyo', 'Cimahi', '2006-10-21', 'Laki-Laki', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '9', 'Islam', 'SMK/SMA Sederajat', '-', 'Belum Kawin', 'Ada', 'Sudah Berkeluarga'),
+(2, 3, '3277030606790001', 'Akung', 'Cimahi', '1979-06-06', 'Laki-Laki', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '5', '4', 'Islam', 'S1', 'Pengusaha', 'Kawin', 'Ada', 'Sudah Berkeluarga'),
+(3, 4, '3277030707840001', 'Riska', 'Cimahi', '1984-07-07', 'Perempuan', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '9', 'Islam', 'S2', 'Ibu Rumah Tangga', 'Kawin', 'Ada', 'Sudah Berkeluarga'),
+(4, 5, '3277031308090001', 'Azka Virzha', 'Cimahi', '2009-08-13', 'Laki-Laki', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '9', 'Islam', 'SMP', '-', 'Belum Kawin', 'Ada', 'Sudah Berkeluarga'),
+(5, 6, '3277032112140001', 'Nurul Ambiya', 'Cimahi', '2014-12-21', 'Perempuan', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '9', 'Islam', 'SD', '-', 'Belum Kawin', 'Ada', 'Sudah Berkeluarga'),
+(6, 7, '3277031309800001', 'Musnar Karsi', 'Bandung', '1980-09-13', 'Laki-Laki', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '5', '3', 'Islam', 'S2', 'Programmer', 'Kawin', 'Ada', 'Sudah Berkeluarga'),
+(7, 8, '3277033003800001', 'Vania Manra', 'Jakarta', '1980-03-30', 'Perempuan', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '5', '3', 'Islam', 'D3', 'Ibu Rumah Tangga', 'Kawin', 'Ada', 'Sudah Berkeluarga'),
+(8, 9, '3277031708030001', 'Bagus Ramadhan', 'Cimahi', '2003-08-17', 'Laki-Laki', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '5', '3', 'Islam', 'D3', 'Programmer', 'Belum Kawin', 'Ada', 'Sudah Berkeluarga');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_tinggal`
+--
+
+CREATE TABLE `riwayat_tinggal` (
+  `id_riwayat_tinggal` int(11) NOT NULL,
+  `id_penduduk` int(11) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `rt` int(11) NOT NULL,
+  `rw` int(11) NOT NULL,
+  `desa_kelurahan` varchar(255) NOT NULL,
+  `kecamatan` varchar(255) NOT NULL,
+  `kota` varchar(255) NOT NULL,
+  `provinsi` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riwayat_tinggal`
+--
+
+INSERT INTO `riwayat_tinggal` (`id_riwayat_tinggal`, `id_penduduk`, `alamat`, `rt`, `rw`, `desa_kelurahan`, `kecamatan`, `kota`, `provinsi`) VALUES
+(1, 1, 'Jl Cihanjuang', 2, 9, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat'),
+(2, 2, 'Jl Cihanjuang', 2, 9, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat'),
+(3, 3, 'Jl Cihanjuang', 2, 9, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat'),
+(4, 4, 'Jl Cihanjuang', 2, 9, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat'),
+(5, 5, 'Jl Cihanjuang', 2, 9, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat'),
+(6, 6, 'Jl Pesantren', 5, 3, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat'),
+(7, 7, 'Jl Pesantren', 5, 3, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat'),
+(8, 8, 'Jl Pesantren', 5, 3, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat');
 
 -- --------------------------------------------------------
 
@@ -138,7 +173,7 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`id_role`, `nama_role`) VALUES
 (1, 'Admin'),
-(4, 'Penduduk');
+(2, 'Penduduk');
 
 -- --------------------------------------------------------
 
@@ -157,13 +192,6 @@ CREATE TABLE `surat_kematian` (
   `bin_binti` varchar(255) NOT NULL,
   `pelapor` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `surat_kematian`
---
-
-INSERT INTO `surat_kematian` (`id_surat_kematian`, `id_penduduk`, `tanggal_kematian`, `jam_kematian`, `penyebab_kematian`, `tempat_kematian`, `usia_kematian`, `bin_binti`, `pelapor`) VALUES
-(7, 11, '2024-05-14', '16:05:00', 'Serangan Jantung', 'Serangan Jantung', 17, 'Kusnandar', '11');
 
 -- --------------------------------------------------------
 
@@ -207,7 +235,7 @@ CREATE TABLE `surat_pindah` (
 --
 
 INSERT INTO `surat_pindah` (`id_surat_pindah`, `id_penduduk`, `alamat_baru`, `rt_baru`, `rw_baru`, `desa_kelurahan_baru`, `kecamatan_baru`, `kabupaten_kota_baru`, `provinsi_baru`, `alasan_pindah`) VALUES
-(2, 7, 'Jl Kolmas', 6, 4, 'Cipageran', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'Kerja');
+(1, 2, 'Jl Pesantren', 5, 4, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'Bosen');
 
 -- --------------------------------------------------------
 
@@ -241,7 +269,7 @@ CREATE TABLE `user` (
   `username` varchar(20) NOT NULL,
   `password` varchar(32) NOT NULL,
   `password_changed` int(1) NOT NULL,
-  `status_user` enum('RT','RW','Penduduk','Kecamatan','Admin') NOT NULL
+  `status_user` enum('Admin','Penduduk') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
@@ -250,13 +278,14 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `id_role`, `nama_user`, `username`, `password`, `password_changed`, `status_user`) VALUES
 (1, 1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 0, 'Admin'),
-(2, 4, 'Samid', '3277982345671953', 'c5e8401594a6c0dc5fc98a783db70f69', 0, 'Penduduk'),
-(3, 4, 'Bagja', '3277982345671954', 'b93939873fd4923043b9dec975811f66', 1, 'Penduduk'),
-(4, 4, 'Kusni', '3277982345671955', 'a19ea7dff6ced87d8cb9c62cc7922497', 1, 'Penduduk'),
-(6, 4, 'arhdfbgjk', '3277030205240001', 'ddd58e02f656d557cf1c8323843d4bc2', 0, 'Penduduk'),
-(7, 4, 'Mantap', '3277030911060001', 'b93939873fd4923043b9dec975811f66', 1, 'Penduduk'),
-(8, 4, 'Tes', '3277982345671955', '5aed8989405524470a2bddaadf3c04aa', 0, 'Penduduk'),
-(9, 4, 'Abdul', '3277031707150001', '6fe77ab9e7338d309d55d364f92b1ae1', 0, 'Penduduk');
+(2, 2, 'Ardiansyah Sulistyo', '3277032110060001', 'e7430a30727eef3a76fcdae8dda8fc2e', 1, 'Penduduk'),
+(3, 2, 'Akung', '3277030606790001', '944fdc2d1e3ee4d425c6e9716a381814', 0, 'Penduduk'),
+(4, 2, 'Riska', '3277030707840001', 'edd7150dfc954a8b9f7b2e30c52c4dfd', 0, 'Penduduk'),
+(5, 2, 'Azka Virzha', '3277031308090001', 'c09f83193145ff4b7c33bb8aa49c9376', 0, 'Penduduk'),
+(6, 2, 'Nurul Ambiya', '3277032112140001', '714d0187752f3b43f59b0024f802b1f2', 0, 'Penduduk'),
+(7, 2, 'Musnar Karsi', '3277031309800001', '6a05840a5d9c98a06a31d2adaa0d16fe', 0, 'Penduduk'),
+(8, 2, 'Vania Manra', '3277033003800001', 'b8e26a9851c2f908985a17d8122e0cdc', 0, 'Penduduk'),
+(9, 2, 'Bagus Ramadhan', '3277031708030001', '965caf02843fc373415907dc205de5a3', 0, 'Penduduk');
 
 --
 -- Indexes for dumped tables
@@ -289,7 +318,15 @@ ALTER TABLE `kk`
 --
 ALTER TABLE `penduduk`
   ADD PRIMARY KEY (`id_penduduk`),
-  ADD KEY `id_user` (`id_user`);
+  ADD UNIQUE KEY `id_user` (`id_user`),
+  ADD KEY `id_user_2` (`id_user`);
+
+--
+-- Indexes for table `riwayat_tinggal`
+--
+ALTER TABLE `riwayat_tinggal`
+  ADD PRIMARY KEY (`id_riwayat_tinggal`),
+  ADD KEY `id_penduduk` (`id_penduduk`);
 
 --
 -- Indexes for table `role`
@@ -340,13 +377,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `anggota_keluarga`
 --
 ALTER TABLE `anggota_keluarga`
-  MODIFY `id_anggota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_anggota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `anggota_keluarga_pindah`
 --
 ALTER TABLE `anggota_keluarga_pindah`
-  MODIFY `id_anggota_keluarga_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_anggota_keluarga_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kk`
@@ -358,37 +395,43 @@ ALTER TABLE `kk`
 -- AUTO_INCREMENT for table `penduduk`
 --
 ALTER TABLE `penduduk`
-  MODIFY `id_penduduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_penduduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `riwayat_tinggal`
+--
+ALTER TABLE `riwayat_tinggal`
+  MODIFY `id_riwayat_tinggal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `surat_kematian`
 --
 ALTER TABLE `surat_kematian`
-  MODIFY `id_surat_kematian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_surat_kematian` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `surat_kematian_temp`
 --
 ALTER TABLE `surat_kematian_temp`
-  MODIFY `id_surat_kematian_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_surat_kematian_temp` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `surat_pindah`
 --
 ALTER TABLE `surat_pindah`
-  MODIFY `id_surat_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_surat_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `surat_pindah_temp`
 --
 ALTER TABLE `surat_pindah_temp`
-  MODIFY `id_surat_pindah_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_surat_pindah_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -404,8 +447,8 @@ ALTER TABLE `user`
 -- Constraints for table `anggota_keluarga`
 --
 ALTER TABLE `anggota_keluarga`
-  ADD CONSTRAINT `anggota_keluarga_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `anggota_keluarga_ibfk_2` FOREIGN KEY (`id_kk`) REFERENCES `kk` (`id_kk`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `anggota_keluarga_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `anggota_keluarga_ibfk_2` FOREIGN KEY (`id_kk`) REFERENCES `kk` (`id_kk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `anggota_keluarga_pindah`
@@ -417,13 +460,25 @@ ALTER TABLE `anggota_keluarga_pindah`
 -- Constraints for table `kk`
 --
 ALTER TABLE `kk`
-  ADD CONSTRAINT `kk_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `kk_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `penduduk`
+--
+ALTER TABLE `penduduk`
+  ADD CONSTRAINT `penduduk_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `riwayat_tinggal`
+--
+ALTER TABLE `riwayat_tinggal`
+  ADD CONSTRAINT `riwayat_tinggal_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `surat_kematian`
 --
 ALTER TABLE `surat_kematian`
-  ADD CONSTRAINT `surat_kematian_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `surat_kematian_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `surat_kematian_temp`
@@ -435,7 +490,7 @@ ALTER TABLE `surat_kematian_temp`
 -- Constraints for table `surat_pindah`
 --
 ALTER TABLE `surat_pindah`
-  ADD CONSTRAINT `surat_pindah_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `surat_pindah_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `surat_pindah_temp`
@@ -447,7 +502,7 @@ ALTER TABLE `surat_pindah_temp`
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

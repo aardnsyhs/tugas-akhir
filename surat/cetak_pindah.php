@@ -29,103 +29,135 @@ class PDF extends FPDF
     }
 }
 
-$id = $_GET['id'];
+$id = $_GET['id_penduduk'];
+$id_kk = $_GET['id_kk'];
 
-$query = "SELECT * FROM penduduk JOIN surat_pindah ON penduduk.id_penduduk=surat_pindah.id_penduduk JOIN kk ON kk.id_penduduk=penduduk.id_penduduk WHERE surat_pindah.id_penduduk = '$id'";
-$hasil = mysqli_query($koneksi, $query);
-$cek_data = mysqli_fetch_assoc($hasil);
-$alamat_asal = $cek_data['alamat_penduduk'] . ", RT. " . $cek_data['rt_penduduk'] . " RW. " .
-               $cek_data['rw_penduduk'] . "\n" .
-               $cek_data['desa_kelurahan_penduduk'] . ", " .
-               $cek_data['kecamatan_penduduk'] . ", " .
-               $cek_data['kabupaten_kota_penduduk'] . "\n" .
-               $cek_data['provinsi_penduduk'];
+// Query pertama untuk mendapatkan data penduduk berdasarkan ID
+$query_penduduk = "SELECT * FROM penduduk JOIN riwayat_tinggal ON penduduk.id_penduduk=riwayat_tinggal.id_penduduk WHERE riwayat_tinggal.id_penduduk = '$id'";
+$hasil_penduduk = mysqli_query($koneksi, $query_penduduk);
+$cek_data_penduduk = mysqli_fetch_assoc($hasil_penduduk);
+
+// Query kedua untuk mendapatkan data surat pindah berdasarkan ID penduduk
+$query_surat_pindah = "SELECT * FROM surat_pindah JOIN penduduk ON surat_pindah.id_penduduk WHERE surat_pindah.id_penduduk = '$id'";
+$hasil_surat_pindah = mysqli_query($koneksi, $query_surat_pindah);
+$cek_data_surat_pindah = mysqli_fetch_assoc($hasil_surat_pindah);
+
+// Query ketiga untuk mendapatkan data kartu keluarga berdasarkan ID penduduk
+$query_kk = "SELECT * FROM penduduk JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_penduduk WHERE anggota_keluarga.id_kk = '$id_kk'";
+$hasil_kk = mysqli_query($koneksi, $query_kk);
+
+$query_no_kk = "SELECT no_kk FROM penduduk JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_anggota JOIN kk ON penduduk.id_penduduk=kk.id_penduduk WHERE anggota_keluarga.id_kk='$id_kk'";
+$hasil_no_kk = mysqli_query($koneksi, $query_no_kk);
+$no_kk = mysqli_fetch_assoc($hasil_no_kk);
+
+if (!$hasil_kk) {
+    die('Query Error: ' . mysqli_error($koneksi));
+}
+
+$cek_id_kk = mysqli_fetch_assoc($hasil_kk);
+if (!$cek_id_kk) {
+    die('Data not found for id_penduduk: ' . $id);
+}
+
+// Menggabungkan alamat asal dari data penduduk
+$alamat_asal = $cek_data_penduduk['alamat'] . ", RT. " . $cek_data_penduduk['rt'] . " RW. " .
+    $cek_data_penduduk['rw'] . "\n" .
+    $cek_data_penduduk['desa_kelurahan'] . ", " .
+    $cek_data_penduduk['kecamatan'] . ", " .
+    $cek_data_penduduk['kota'] . "\n" .
+    $cek_data_penduduk['provinsi'];
+
+$alamat_tujuan = $cek_data_surat_pindah['alamat_baru'] . ", RT. " . $cek_data_surat_pindah['rt_baru'] . " RW. " .
+    $cek_data_surat_pindah['rw_baru'] . "\n" .
+    $cek_data_surat_pindah['desa_kelurahan_baru'] . ", " .
+    $cek_data_surat_pindah['kecamatan_baru'] . ", " .
+    $cek_data_surat_pindah['kabupaten_kota_baru'] . "\n" .
+    $cek_data_surat_pindah['provinsi_baru'];
 
 $pdf = new PDF('P', 'mm', [210, 330]);
 $pdf->AliasNbPages();
 
-    $pdf->AddPage();
+$pdf->AddPage();
 
-    $pdf->SetFont('Times', '', 12);
+$pdf->SetFont('Times', '', 12);
 
-    $nomor = 1;
+$nomor = 1;
 
-    $pdf->Ln();
-    $pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Lurah Cibabat, Kecamatan Cimahi Utara, Kota Cimahi menerangkan dengan sebenarnya bahwa : ', 0, 'L');
+$pdf->Ln();
+$pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Lurah Cibabat, Kecamatan Cimahi Utara, Kota Cimahi menerangkan dengan sebenarnya bahwa : ', 0, 'L');
 
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Nama', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, substr(strtoupper($cek_data['nama_penduduk']), 0, 17), 0, 1, 'L');
-    
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'NIK', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, strtoupper($cek_data['nik_penduduk']), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Nama', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($cek_data_penduduk['nama_penduduk']), 0, 17), 0, 1, 'L');
 
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Jenis Kelamin', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, strtoupper($cek_data['jenis_kelamin_penduduk']), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'NIK', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, strtoupper($cek_data_penduduk['nik_penduduk']), 0, 1, 'L');
 
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Tempat, Tanggal Lahir', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, $cek_data['tempat_lahir_penduduk'] . ", " . $cek_data['tanggal_lahir_penduduk'], 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Jenis Kelamin', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, strtoupper($cek_data_penduduk['jenis_kelamin_penduduk']), 0, 1, 'L');
 
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Warganegara / Agama', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, substr(strtoupper($cek_data['negara_penduduk'] . " / " . $cek_data['agama_penduduk']), 0, 20), 0, 1, 'L');
-    
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Pekerjaan', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, substr(strtoupper($cek_data['pekerjaan_penduduk']), 0, 20), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Tempat, Tanggal Lahir', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$tanggal_lahir = date('d-m-Y', strtotime($cek_data_penduduk['tanggal_lahir_penduduk']));
+$pdf->cell(80, 7, $cek_data_penduduk['tempat_lahir_penduduk'] . ", " . $tanggal_lahir, 0, 1, 'L');
 
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Status Pernikahan', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, substr(strtoupper($cek_data['status_perkawinan_penduduk']), 0, 20), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Warganegara / Agama', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($cek_data_penduduk['negara_penduduk'] . " / " . $cek_data_penduduk['agama_penduduk']), 0, 20), 0, 1, 'L');
 
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Pendidikan', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, substr(strtoupper($cek_data['pendidikan_terakhir_penduduk']), 0, 20), 0, 1, 'L');
-    
-    $pdf->SetX(15);
-    $pdf->Cell(45, 7, 'Alamat Asal', 0, 0, 'L');
-    $pdf->Cell(2, 7, ':', 0, 0, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Pekerjaan', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($cek_data_penduduk['pekerjaan_penduduk']), 0, 20), 0, 1, 'L');
 
-    $pdf->SetX(62);
-    $pdf->MultiCell(0, 7, strtoupper($alamat_asal), 0, 'L');
-    
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'No.Kartu Keluarga', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, substr(strtoupper($cek_data['no_kk']), 0, 20), 0, 1, 'L');
-    
-    $pdf->SetX(15);
-    $pdf->Cell(45, 7, 'Alamat Tujuan Pindah', 0, 0, 'L');
-    $pdf->Cell(2, 7, ':', 0, 0, 'L');
-    
-    $pdf->SetX(62);
-    $pdf->MultiCell(0, 7, strtoupper($alamat_asal), 0, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Status Pernikahan', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($cek_data_penduduk['status_perkawinan_penduduk']), 0, 20), 0, 1, 'L');
 
-    $pdf->SetX(15);
-    $pdf->cell(45, 7, 'Alasan Pindah', 0, 0, 'L');
-    $pdf->cell(2, 7, ':', 0, 0, 'L');
-    $pdf->cell(80, 7, substr(strtoupper($cek_data['alasan_pindah']), 0, 20), 0, 1, 'L');
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Pendidikan', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($cek_data_penduduk['pendidikan_terakhir_penduduk']), 0, 20), 0, 1, 'L');
 
-    $pdf->MultiCell(0, 7, 'Demikian Surat Pengantar Pindah ini dibuat dan diberikan kepada yang bersangkutan untuk', 0, 'L');
-    $pdf->MultiCell(0, 7, 'dipergunakan sebagaimana mestinya.', 0, 'L');
+$pdf->SetX(15);
+$pdf->Cell(45, 7, 'Alamat Asal', 0, 0, 'L');
+$pdf->Cell(2, 7, ':', 0, 0, 'L');
+$pdf->SetX(62);
+$pdf->MultiCell(0, 7, strtoupper($alamat_asal), 0, 'L');
 
-    $pdf->SetY($pdf->GetY() + 20);
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'No.Kartu Keluarga', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($no_kk['no_kk']), 0, 20), 0, 1, 'L');
+
+$pdf->SetX(15);
+$pdf->Cell(45, 7, 'Alamat Tujuan Pindah', 0, 0, 'L');
+$pdf->Cell(2, 7, ':', 0, 0, 'L');
+$pdf->SetX(62);
+$pdf->MultiCell(0, 7, strtoupper($alamat_tujuan), 0, 'L');
+
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Alasan Pindah', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($cek_data_surat_pindah['alasan_pindah']), 0, 20), 0, 1, 'L');
+
+$pdf->MultiCell(0, 7, 'Demikian Surat Pengantar Pindah ini dibuat dan diberikan kepada yang bersangkutan untuk', 0, 'L');
+$pdf->MultiCell(0, 7, 'dipergunakan sebagaimana mestinya.', 0, 'L');
+
+$pdf->SetY($pdf->GetY() + 20);
 
 // Atur Tanggal Hari ini
 $bulan = [
-    1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 
-    6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 
+    1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei',
+    6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September',
     10 => 'Oktober', 11 => 'November', 12 => 'Desember'
 ];
 

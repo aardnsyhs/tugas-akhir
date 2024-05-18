@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['no_kk'])) {
     $encoded_no_kk = $_GET['no_kk'];
-    $no_kk = base64_decode($encoded_no_kk);
+    $no_kk = decrypt($encoded_no_kk);
 
     $sql_cek = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk=penduduk.id_penduduk WHERE no_kk='$no_kk'";
     $query_cek = mysqli_query($koneksi, $sql_cek);

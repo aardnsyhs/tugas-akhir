@@ -18,7 +18,7 @@ $alasan_pindah = $hasil['alasan_pindah'];
 $sql = "INSERT INTO surat_pindah VALUES (NULL, '$id_penduduk', '$alamat_baru', '$rt_baru', '$rw_baru', '$desa_kelurahan_baru', '$kecamatan_baru', '$kabupaten_kota_baru', '$provinsi_baru', '$alasan_pindah')";
 $tambah_pindah = mysqli_query($koneksi, $sql);
 
-$sql = "UPDATE `penduduk` SET `alamat_penduduk` = '$alamat_baru', `rt_penduduk` = '$rt_baru', `rw_penduduk` = '$rw_baru', `desa_kelurahan_penduduk` = '$desa_kelurahan_baru', `kecamatan_penduduk` = '$kecamatan_baru', `kabupaten_kota_penduduk` = '$kabupaten_kota_baru', `provinsi_penduduk` = '$provinsi_baru' WHERE `id_penduduk` = '$id_penduduk'";
+$sql = "UPDATE `penduduk` SET `alamat_penduduk` = '$alamat_baru', `rt_penduduk` = '$rt_baru', `rw_penduduk` = '$rw_baru', `desa_kelurahan_penduduk` = '$desa_kelurahan_baru', `kecamatan_penduduk` = '$kecamatan_baru', `kabupaten_kota_penduduk` = '$kabupaten_kota_baru', `provinsi_penduduk` = '$provinsi_baru', `status` = 'Pindah' WHERE `id_penduduk` = '$id_penduduk'";
 $ubah_status = mysqli_query($koneksi, $sql);
 
 $sql = "DELETE FROM `surat_pindah_temp` WHERE `surat_pindah_temp`.id_penduduk = '$id_penduduk'";

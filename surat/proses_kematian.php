@@ -14,16 +14,16 @@ $bin_binti = $hasil['bin_binti'];
 $pelapor = $hasil['pelapor'];
 
 function hitungUsia($tanggal_lahir, $tanggal_kematian)
-                    {
-                        $lahir = new DateTime($tanggal_lahir);
-                        $kematian = new DateTime($tanggal_kematian);
-                        $usia = $lahir->diff($kematian);
-                        return $usia->y;
-                    }
-                        $tanggal_lahir = $hasil['tanggal_lahir_penduduk'];
-                        $tanggal_kematian = $hasil['tanggal_kematian'];
+{
+    $lahir = new DateTime($tanggal_lahir);
+    $kematian = new DateTime($tanggal_kematian);
+    $usia = $lahir->diff($kematian);
+    return $usia->y;
+}
+$tanggal_lahir = $hasil['tanggal_lahir_penduduk'];
+$tanggal_kematian = $hasil['tanggal_kematian'];
 
-$hitung_usia = hitungUsia($tanggal_lahir, $tambah_kematian);
+$hitung_usia = hitungUsia($tanggal_lahir, $tanggal_kematian);
 
 $sql = "INSERT INTO surat_kematian VALUES (NULL, '$id_penduduk', '$tanggal_kematian', '$jam_kematian', '$penyebab_kematian', '$tempat_kematian', '$hitung_usia', '$bin_binti', '$pelapor')";
 $tambah_kematian = mysqli_query($koneksi, $sql);

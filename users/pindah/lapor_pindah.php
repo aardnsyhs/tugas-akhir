@@ -6,7 +6,7 @@ if (isset($_GET['no_kk'])) {
     $sql_cek = "SELECT * FROM `kk` JOIN `penduduk` ON kk.id_penduduk=penduduk.id_penduduk WHERE no_kk='$no_kk'";
     $query_cek = mysqli_query($koneksi, $sql_cek);
     $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-    $karkel = $data_cek['no_kk'];
+    $karkel = encrypt($data_cek['no_kk']);
 }
 $sql = "SELECT * FROM penduduk WHERE nama_penduduk='$data_nama'";
 $cek_penduduk = mysqli_query($koneksi, $sql);
@@ -87,7 +87,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
                             $sql = $koneksi->query("SELECT p.nik_penduduk, p.nama_penduduk, p.id_penduduk, a.id_anggota 
                             FROM penduduk p 
                             JOIN anggota_keluarga a ON p.id_penduduk = a.id_penduduk
-                            WHERE a.id_kk IN (SELECT id_kk FROM kk WHERE no_kk = '$karkel')");
+                            WHERE a.id_kk IN (SELECT id_kk FROM kk WHERE no_kk = '$no_kk') AND status='Ada'");
                             while ($data = $sql->fetch_assoc()) {
                             ?>
                                 <option value="<?= $data['id_penduduk'] ?>">
@@ -95,7 +95,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
                                 </option>
                             <?php } ?>
                         </select>
-                        <input type="submit" name="Simpan" value="Tambah" class="btn btn-primary mt-2">
+                        <input type="submit" name="Simpan" value="Tambah" onclick="simpanNilaiInput()" class="btn btn-primary mt-2">
                     </div>
                 </div>
             </td>
@@ -142,6 +142,40 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
         Laporkan
     </button>
 </form>
+<script>
+    function simpanNilaiInput() {
+        localStorage.setItem('alamat_baru', document.getElementsByName('alamat_baru')[0].value);
+        localStorage.setItem('rt_baru', document.getElementsByName('rt_baru')[0].value);
+        localStorage.setItem('rw_baru', document.getElementsByName('rw_baru')[0].value);
+        localStorage.setItem('desa_kelurahan_baru', document.getElementsByName('desa_kelurahan_baru')[0].value);
+        localStorage.setItem('kecamatan_baru', document.getElementsByName('kecamatan_baru')[0].value);
+        localStorage.setItem('kabupaten_kota_baru', document.getElementsByName('kabupaten_kota_baru')[0].value);
+        localStorage.setItem('provinsi_baru', document.getElementsByName('provinsi_baru')[0].value);
+        localStorage.setItem('alasan_pindah', document.getElementsByName('alasan_pindah')[0].value);
+    }
+
+    function clearStorage() {
+        localStorage.removeItem('alamat_baru');
+        localStorage.removeItem('rt_baru');
+        localStorage.removeItem('rw_baru');
+        localStorage.removeItem('desa_kelurahan_baru');
+        localStorage.removeItem('kecamatan_baru');
+        localStorage.removeItem('kabupaten_kota_baru');
+        localStorage.removeItem('provinsi_baru');
+        localStorage.removeItem('alasan_pindah');
+    }
+
+    window.onload = function() {
+        document.getElementsByName('alamat_baru')[0].value = localStorage.getItem('alamat_baru');
+        document.getElementsByName('rt_baru')[0].value = localStorage.getItem('rt_baru');
+        document.getElementsByName('rw_baru')[0].value = localStorage.getItem('rw_baru');
+        document.getElementsByName('desa_kelurahan_baru')[0].value = localStorage.getItem('desa_kelurahan_baru');
+        document.getElementsByName('kecamatan_baru')[0].value = localStorage.getItem('kecamatan_baru');
+        document.getElementsByName('kabupaten_kota_baru')[0].value = localStorage.getItem('kabupaten_kota_baru');
+        document.getElementsByName('provinsi_baru')[0].value = localStorage.getItem('provinsi_baru');
+        document.getElementsByName('alasan_pindah')[0].value = localStorage.getItem('alasan_pindah');
+    };
+</script>
 <?php
 if (isset($_POST['Simpan'])) {
     $encoded_no_kk = $_GET['no_kk'];
@@ -157,6 +191,7 @@ if (isset($_POST['Simpan'])) {
                 Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
                 }).then((result) => {if (result.value){
                     window.location = 'index.php?page=lapor_pindah&no_kk=" . $no_kk . "';
+                    clearStorage();
                     }
                 })
               </script>";
@@ -189,16 +224,16 @@ if (isset($_POST['Simpan'])) {
 
     if ($query_simpan) {
         echo "<script>
-      Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
+      Swal.fire({title: 'Tambah Laporan Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {if (result.value){
-          window.location = 'index.php?page=lapor_pindah';
+          window.location = 'index.php?page=lapor_pindah&no_kk=" . encrypt($no_kk) . "';
           }
       })</script>";
     } else {
         echo "<script>
-      Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
+      Swal.fire({title: 'Tambah Laporan Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {if (result.value){
-          window.location = 'index.php?page=lapor_pindah';
+          window.location = 'index.php?page=lapor_pindah&no_kk=" . encrypt($no_kk) . "';
           }
       })</script>";
     }

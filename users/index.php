@@ -94,7 +94,7 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                         </li>
                         <li class="nav-item has-treeview">
                             <?php foreach ($data_anggota_keluarga as $kk) : ?>
-                                <?php $encoded_no_kk = base64_encode($kk['no_kk']); ?>
+                                <?php $encoded_no_kk = encrypt($kk['no_kk']); ?>
                                 <a href="?page=anggota&no_kk=<?= $encoded_no_kk ?>" class="nav-link">
                                     <i class="nav-icon fas fa-table"></i>
                                     <p>
@@ -208,7 +208,7 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                                 break;
                         }
                     } else {
-                        if ($id_role == "4") {
+                        if ($id_role == "2") {
                             include "home/index.php";
                         }
                     }
