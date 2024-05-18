@@ -112,7 +112,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
             <tbody>
                 <?php
                 $no = 1;
-                $sql = $koneksi->query("SELECT * FROM anggota_keluarga_pindah JOIN penduduk ON anggota_keluarga_pindah.id_penduduk=penduduk.id_penduduk");
+                $sql = $koneksi->query("SELECT * FROM penduduk JOIN anggota_keluarga_pindah ON anggota_keluarga_pindah.id_penduduk=penduduk.id_penduduk JOIN kk ON penduduk.id_penduduk=kk.id_penduduk WHERE kk.no_kk='$karkel'");
                 while ($data = $sql->fetch_assoc()) {
                 ?>
                     <tr>
