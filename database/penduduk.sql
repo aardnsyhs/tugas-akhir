@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 11:26 AM
+-- Generation Time: May 18, 2024 at 09:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -106,7 +106,7 @@ CREATE TABLE `penduduk` (
   `pendidikan_terakhir_penduduk` varchar(20) NOT NULL,
   `pekerjaan_penduduk` varchar(20) NOT NULL,
   `status_perkawinan_penduduk` enum('Kawin','Tidak Kawin','Belum Kawin','Cerai') NOT NULL,
-  `status` enum('Ada','Meninggal','Pindah','Izin Tinggal') NOT NULL,
+  `status` enum('Ada','Meninggal') NOT NULL,
   `status_keluarga` enum('Sudah Berkeluarga','Belum Berkeluarga','','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -115,7 +115,7 @@ CREATE TABLE `penduduk` (
 --
 
 INSERT INTO `penduduk` (`id_penduduk`, `id_user`, `nik_penduduk`, `nama_penduduk`, `tempat_lahir_penduduk`, `tanggal_lahir_penduduk`, `jenis_kelamin_penduduk`, `alamat_penduduk`, `desa_kelurahan_penduduk`, `kecamatan_penduduk`, `kabupaten_kota_penduduk`, `provinsi_penduduk`, `negara_penduduk`, `rt_penduduk`, `rw_penduduk`, `agama_penduduk`, `pendidikan_terakhir_penduduk`, `pekerjaan_penduduk`, `status_perkawinan_penduduk`, `status`, `status_keluarga`) VALUES
-(1, 2, '3277032110060001', 'Ardiansyah Sulistyo', 'Cimahi', '2006-10-21', 'Laki-Laki', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '9', 'Islam', 'SMK/SMA Sederajat', '-', 'Belum Kawin', 'Ada', 'Sudah Berkeluarga'),
+(1, 2, '3277032110060001', 'Ardiansyah Sulistyo', 'Cimahi', '2006-10-21', 'Laki-Laki', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '5', '4', 'Islam', 'SMK/SMA Sederajat', '-', 'Belum Kawin', '', 'Sudah Berkeluarga'),
 (2, 3, '3277030606790001', 'Akung', 'Cimahi', '1979-06-06', 'Laki-Laki', 'Jl Pesantren', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '5', '4', 'Islam', 'S1', 'Pengusaha', 'Kawin', 'Ada', 'Sudah Berkeluarga'),
 (3, 4, '3277030707840001', 'Riska', 'Cimahi', '1984-07-07', 'Perempuan', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '9', 'Islam', 'S2', 'Ibu Rumah Tangga', 'Kawin', 'Ada', 'Sudah Berkeluarga'),
 (4, 5, '3277031308090001', 'Azka Virzha', 'Cimahi', '2009-08-13', 'Laki-Laki', 'Jl Cihanjuang', 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'WNI', '2', '9', 'Islam', 'SMP', '-', 'Belum Kawin', 'Ada', 'Sudah Berkeluarga'),
@@ -235,7 +235,8 @@ CREATE TABLE `surat_pindah` (
 --
 
 INSERT INTO `surat_pindah` (`id_surat_pindah`, `id_penduduk`, `alamat_baru`, `rt_baru`, `rw_baru`, `desa_kelurahan_baru`, `kecamatan_baru`, `kabupaten_kota_baru`, `provinsi_baru`, `alasan_pindah`) VALUES
-(1, 2, 'Jl Pesantren', 5, 4, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'Bosen');
+(1, 2, 'Jl Pesantren', 5, 4, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'Bosen'),
+(7, 1, 'Jl Pesantren', 5, 4, 'Cibabat', 'Cimahi Utara', 'Cimahi', 'Jawa Barat', 'Ikut Orang Tua');
 
 -- --------------------------------------------------------
 
@@ -278,7 +279,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `id_role`, `nama_user`, `username`, `password`, `password_changed`, `status_user`) VALUES
 (1, 1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 0, 'Admin'),
-(2, 2, 'Ardiansyah Sulistyo', '3277032110060001', 'e7430a30727eef3a76fcdae8dda8fc2e', 1, 'Penduduk'),
+(2, 2, 'Ardiansyah Sulistyo', '3277032110060001', '155711f95548eb248c07bd708484422f', 0, 'Penduduk'),
 (3, 2, 'Akung', '3277030606790001', '944fdc2d1e3ee4d425c6e9716a381814', 0, 'Penduduk'),
 (4, 2, 'Riska', '3277030707840001', 'edd7150dfc954a8b9f7b2e30c52c4dfd', 0, 'Penduduk'),
 (5, 2, 'Azka Virzha', '3277031308090001', 'c09f83193145ff4b7c33bb8aa49c9376', 0, 'Penduduk'),
@@ -383,7 +384,7 @@ ALTER TABLE `anggota_keluarga`
 -- AUTO_INCREMENT for table `anggota_keluarga_pindah`
 --
 ALTER TABLE `anggota_keluarga_pindah`
-  MODIFY `id_anggota_keluarga_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_anggota_keluarga_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `kk`
@@ -425,13 +426,13 @@ ALTER TABLE `surat_kematian_temp`
 -- AUTO_INCREMENT for table `surat_pindah`
 --
 ALTER TABLE `surat_pindah`
-  MODIFY `id_surat_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_surat_pindah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `surat_pindah_temp`
 --
 ALTER TABLE `surat_pindah_temp`
-  MODIFY `id_surat_pindah_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_surat_pindah_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`
