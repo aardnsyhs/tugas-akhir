@@ -7,6 +7,7 @@ if (isset($_GET['no_kk'])) {
     $query_cek = mysqli_query($koneksi, $sql_cek);
     $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
     $karkel = encrypt($data_cek['no_kk']);
+    $id_kk = $_SESSION['id_kk'];
 }
 $sql = "SELECT * FROM penduduk WHERE nama_penduduk='$data_nama'";
 $cek_penduduk = mysqli_query($koneksi, $sql);
@@ -112,7 +113,10 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
             <tbody>
                 <?php
                 $no = 1;
-                $sql = $koneksi->query("SELECT * FROM penduduk JOIN anggota_keluarga_pindah ON anggota_keluarga_pindah.id_penduduk=penduduk.id_penduduk JOIN kk ON penduduk.id_penduduk=kk.id_penduduk WHERE kk.no_kk='$karkel'");
+                $sql = $koneksi->query("SELECT * FROM penduduk 
+                JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_penduduk 
+                JOIN anggota_keluarga_pindah ON penduduk.id_penduduk=anggota_keluarga_pindah.id_penduduk 
+                WHERE anggota_keluarga.id_kk='$id_kk'");
                 while ($data = $sql->fetch_assoc()) {
                 ?>
                     <tr>
@@ -137,7 +141,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
             </tbody>
         </table>
     </table>
-    <button type="submit" class="btn btn-primary" name="Laporkan">
+    <button type="submit" class="btn btn-primary" name="Laporkan" onclick="clearStorage()">
         <i class="fa-solid fa-floppy-disk"></i>
         Laporkan
     </button>
@@ -182,7 +186,7 @@ if (isset($_POST['Simpan'])) {
     $no_kk = decrypt($encoded_no_kk);
 
     $id_penduduk = $_POST['id_penduduk'];
-    $query = "INSERT INTO `anggota_keluarga_pindah` VALUES (NULL, '$id_penduduk')";
+    $query = "INSERT INTO `anggota_keluarga_pindah` VALUES (NULL, '$id_penduduk', '$id_kk')";
     $hasil = mysqli_query($koneksi, $query);
     $no_kk = encrypt($no_kk);
 
@@ -191,7 +195,6 @@ if (isset($_POST['Simpan'])) {
                 Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
                 }).then((result) => {if (result.value){
                     window.location = 'index.php?page=lapor_pindah&no_kk=" . $no_kk . "';
-                    clearStorage();
                     }
                 })
               </script>";
@@ -219,7 +222,10 @@ if (isset($_POST['Simpan'])) {
     $data_penduduk = mysqli_fetch_assoc($hasil_penduduk);
     $id_penduduk = $data_penduduk['id_penduduk'];
 
-    $sql = "INSERT INTO `surat_pindah_temp` VALUES (NULL, '$id_penduduk', '$alamat_baru', '$rt_baru', '$rw_baru', '$desa_kelurahan_baru', '$kecamatan_baru', '$kabupaten_kota_baru', '$provinsi_baru', '$alasan_pindah')";
+    $sql = "INSERT INTO `surat_pindah_temp` VALUES 
+    (NULL, '$id_penduduk', '$alamat_baru', '$rt_baru', '$rw_baru', 
+    '$desa_kelurahan_baru', '$kecamatan_baru', '$kabupaten_kota_baru', 
+    '$provinsi_baru', '$alasan_pindah')";
     $query_simpan = mysqli_query($koneksi, $sql);
 
     if ($query_simpan) {
@@ -227,6 +233,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Laporan Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {if (result.value){
           window.location = 'index.php?page=lapor_pindah&no_kk=" . encrypt($no_kk) . "';
+          clearStorage();
           }
       })</script>";
     } else {
@@ -238,3 +245,4 @@ if (isset($_POST['Simpan'])) {
       })</script>";
     }
 }
+?>

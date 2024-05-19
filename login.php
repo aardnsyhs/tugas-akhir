@@ -73,8 +73,6 @@ if (isset($_POST['btnLogin'])) {
     $sql_login = "SELECT *
     FROM `user`
     JOIN `role` ON role.id_role = user.id_role
-    JOIN `penduduk` ON user.id_user = penduduk.id_user
-    LEFT JOIN `anggota_keluarga` ON penduduk.id_penduduk = anggota_keluarga.id_penduduk
     WHERE BINARY username = '$username' AND password = '$password'";
     $query_login = mysqli_query($koneksi, $sql_login);
     $data_login = mysqli_fetch_array($query_login, MYSQLI_BOTH);
@@ -84,7 +82,6 @@ if (isset($_POST['btnLogin'])) {
         session_start();
         $_SESSION["id"] = $data_login["id_user"];
         $_SESSION["id_role"] = $data_login["id_role"];
-        $_SESSION['id_kk'] = $data_login['id_kk'];
         $_SESSION["nama_user"] = $data_login["nama_user"];
         $_SESSION["username"] = $data_login["username"];
         $_SESSION["password"] = $data_login["password"];

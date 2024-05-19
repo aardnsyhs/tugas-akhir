@@ -6,6 +6,23 @@ if (!isset($_SESSION["username"])) {
     header("location: login.php");
     exit;
 } else {
+    $username = $_SESSION["username"];
+    $password = md5($_SESSION['password']);
+
+    $sql_login = "SELECT *
+    FROM `user`
+    JOIN `role` ON role.id_role = user.id_role
+    JOIN `penduduk` ON user.id_user = penduduk.id_user
+    LEFT JOIN `anggota_keluarga` ON penduduk.id_penduduk = anggota_keluarga.id_penduduk
+    WHERE BINARY username = '$username' ";
+    $query_login = mysqli_query($koneksi, $sql_login);
+    $data_login = mysqli_fetch_array($query_login, MYSQLI_BOTH);
+    $jumlah_login = mysqli_num_rows($query_login);
+    
+    if ($jumlah_login == 1) {
+        $_SESSION['id_kk'] = $data_login['id_kk'];
+    }
+
     $data_id = isset($_SESSION["id"]) ? $_SESSION["id"] : "";
     $id_role = isset($_SESSION["id_role"]) ? $_SESSION["id_role"] : "";
     $data_nama = isset($_SESSION["nama_user"]) ? $_SESSION["nama_user"] : "";

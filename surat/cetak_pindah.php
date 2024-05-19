@@ -43,18 +43,27 @@ $hasil_surat_pindah = mysqli_query($koneksi, $query_surat_pindah);
 $cek_data_surat_pindah = mysqli_fetch_assoc($hasil_surat_pindah);
 
 // Query ketiga untuk mendapatkan data kartu keluarga berdasarkan ID penduduk
-$query_kk = "SELECT * FROM penduduk JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_penduduk WHERE anggota_keluarga.id_kk = '$id_kk'";
-$hasil_kk = mysqli_query($koneksi, $query_kk);
+$query_kk = "SELECT * FROM penduduk JOIN anggota_keluarga_pindah ON penduduk.id_penduduk=anggota_keluarga_pindah.id_penduduk WHERE anggota_keluarga_pindah.id_kk = '$id_kk'";
+$hasil_kk_pindah = mysqli_query($koneksi, $query_kk);
+
+$query_anggota_pindah = "SELECT (SELECT COUNT(*) FROM penduduk JOIN anggota_keluarga_pindah 
+ON penduduk.id_penduduk = anggota_keluarga_pindah.id_penduduk 
+WHERE anggota_keluarga_pindah.id_kk = $id_kk) AS jumlah_anggota_pindah, penduduk.* FROM penduduk 
+JOIN anggota_keluarga_pindah ON penduduk.id_penduduk = anggota_keluarga_pindah.id_penduduk 
+WHERE anggota_keluarga_pindah.id_kk = $id_kk";
+$hasil_anggota_pindah = mysqli_query($koneksi, $query_anggota_pindah);
+$jumlah_anggota_pindah = mysqli_fetch_assoc($hasil_anggota_pindah);
+$jumlah_anggota = $jumlah_anggota_pindah['jumlah_anggota_pindah'];
 
 $query_no_kk = "SELECT no_kk FROM penduduk JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_anggota JOIN kk ON penduduk.id_penduduk=kk.id_penduduk WHERE anggota_keluarga.id_kk='$id_kk'";
 $hasil_no_kk = mysqli_query($koneksi, $query_no_kk);
 $no_kk = mysqli_fetch_assoc($hasil_no_kk);
 
-if (!$hasil_kk) {
+if (!$hasil_kk_pindah) {
     die('Query Error: ' . mysqli_error($koneksi));
 }
 
-$cek_id_kk = mysqli_fetch_assoc($hasil_kk);
+$cek_id_kk = mysqli_fetch_assoc($hasil_kk_pindah);
 if (!$cek_id_kk) {
     die('Data not found for id_penduduk: ' . $id);
 }
@@ -148,6 +157,27 @@ $pdf->SetX(15);
 $pdf->cell(45, 7, 'Alasan Pindah', 0, 0, 'L');
 $pdf->cell(2, 7, ':', 0, 0, 'L');
 $pdf->cell(80, 7, substr(strtoupper($cek_data_surat_pindah['alasan_pindah']), 0, 20), 0, 1, 'L');
+
+$pdf->SetX(15);
+$pdf->cell(45, 7, 'Keluarga Pindah', 0, 0, 'L');
+$pdf->cell(2, 7, ':', 0, 0, 'L');
+$pdf->cell(80, 7, substr(strtoupper($jumlah_anggota . ' Orang'), 0, 20), 0, 1, 'L');
+
+// Menambahkan judul tabel
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(10, 7, 'No', 1, 0, 'C');
+$pdf->Cell(60, 7, 'NIK Penduduk', 1, 0, 'C');
+$pdf->Cell(80, 7, 'Nama Penduduk', 1, 1, 'C');
+
+// Menambahkan data ke tabel
+$pdf->SetFont('Times', '', 12);
+$no = 1;
+foreach ($hasil_kk_pindah as $row) {
+    $pdf->Cell(10, 7, $no, 1, 0, 'C');
+    $pdf->Cell(60, 7, $row['nik_penduduk'], 1, 0, 'C');
+    $pdf->Cell(80, 7, $row['nama_penduduk'], 1, 1, 'C');
+    $no++;
+}
 
 $pdf->MultiCell(0, 7, 'Demikian Surat Pengantar Pindah ini dibuat dan diberikan kepada yang bersangkutan untuk', 0, 'L');
 $pdf->MultiCell(0, 7, 'dipergunakan sebagaimana mestinya.', 0, 'L');

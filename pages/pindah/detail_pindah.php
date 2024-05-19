@@ -62,6 +62,37 @@ while ($row = mysqli_fetch_assoc($hasil)) {
         <td><?= $data_pindah[0]['alasan_pindah'] ?></td>
     </tr>
 </table>
+<h3>C. Anggota Keluarga Pindah</h3>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>NIK</th>
+                <th>Nama Penduduk Pindah</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $no = 1;
+            $sql = $koneksi->query("SELECT * FROM anggota_keluarga_pindah JOIN penduduk ON anggota_keluarga_pindah.id_penduduk=penduduk.id_penduduk");
+            while ($data = $sql->fetch_assoc()) {
+            ?>
+                <tr>
+                    <td>
+                        <?= $no++ ?>
+                    </td>
+                    <td>
+                        <?= $data['nik_penduduk']; ?>
+                    </td>
+                    <td>
+                        <?= $data['nama_penduduk']; ?>
+                    </td>
+                </tr>
+            <?php
+            }
+            ?>
+        </tbody>
+    </table>
 <a href="index.php?page=pindah" class="btn btn-warning">
     <i class="fa-solid fa-xmark"></i>
     Kembali
