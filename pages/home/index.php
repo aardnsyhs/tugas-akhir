@@ -1,5 +1,4 @@
 <?php
-
 $sql = $koneksi->query("SELECT COUNT(id_penduduk) AS pend FROM penduduk WHERE status='Ada'");
 while ($data = $sql->fetch_assoc()) {
     $pend = $data['pend'];
@@ -28,6 +27,11 @@ while ($data = $sql->fetch_assoc()) {
 $sql = $koneksi->query("SELECT COUNT(id_surat_pindah) AS pindah FROM surat_pindah");
 while ($data = $sql->fetch_assoc()) {
     $pindah = $data['pindah'];
+}
+
+$sql = $koneksi->query("SELECT COUNT(id_surat_izin_tinggal) AS izin_tinggal FROM surat_izin_tinggal");
+while ($data = $sql->fetch_assoc()) {
+    $izin_tinggal = $data['izin_tinggal'];
 }
 ?>
 <div class="row">
@@ -89,11 +93,23 @@ while ($data = $sql->fetch_assoc()) {
                 <h3>
                     <?php echo $mendu;  ?>
                 </h3>
-
                 <p>Meninggal</p>
             </div>
             <div class="icon">
                 <i class="ion ion-android-sad"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-primary">
+            <div class="inner">
+                <h3>
+                    <?php echo $izin_tinggal;  ?>
+                </h3>
+                <p>Izin Tinggal</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-download"></i>
             </div>
         </div>
     </div>

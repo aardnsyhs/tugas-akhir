@@ -139,13 +139,11 @@ $pdf->cell(160, 7, 'Cibabat, ' . $tanggal_pindah_format, 0, 0, 'R');
 
 $pdf->Ln(5);
 
-// Set posisi X dan Y untuk teks "An. LURAH CIBABAT"
 $pdf->SetX(17);
 $pdf->Cell(160, 7, 'An. LURAH CIBABAT', 0, 0, 'R');
 
-// Set posisi X untuk teks "yang bersangkutan" agar sejajar di sebelah kiri
-$pdf->SetY($pdf->GetY() - 7); // Sesuaikan posisi Y ke atas
-$pdf->SetX(17); // Sesuaikan posisi X sesuai kebutuhan
+$pdf->SetY($pdf->GetY() - 7);
+$pdf->SetX(17);
 $pdf->Cell(0, 7, 'Yang Bersangkutan', 0, 1, 'L');
 
 $pdf->Ln(5);
