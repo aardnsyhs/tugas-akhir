@@ -84,7 +84,7 @@ if (isset($_POST['ubah'])) {
     $provinsi_baru = $_POST['provinsi_baru'];
     $alasan_pindah = $_POST['alasan_pindah'];
 
-    $sql = "UPDATE `surat_pindah_temp` SET `alamat_baru` = '$alamat_baru', `rt_baru` = '$rt_baru', `rw_baru` = '$rw_baru', `desa_kelurahan_baru` = '$desa_kelurahan_baru', `kecamatan_baru` = '$kecamatan_baru', `kabupaten_kota_baru` = '$kabupaten_kota_baru', `provinsi_baru` = '$provinsi_baru' WHERE `surat_pindah_temp`.`id_surat_pindah_temp` = '$id_surat_pindah_temp'";
+    $sql = "UPDATE `surat_pindah_temp` SET `alamat_baru` = '$alamat_baru', `rt_baru` = '$rt_baru', `rw_baru` = '$rw_baru', `desa_kelurahan_baru` = '$desa_kelurahan_baru', `kecamatan_baru` = '$kecamatan_baru', `kabupaten_kota_baru` = '$kabupaten_kota_baru', `provinsi_baru` = '$provinsi_baru', `alasan_pindah` = '$alasan_pindah' WHERE `surat_pindah_temp`.`id_surat_pindah_temp` = '$id_surat_pindah_temp'";
     $query = mysqli_query($koneksi, $sql);
     if ($query) {
         echo "<script>

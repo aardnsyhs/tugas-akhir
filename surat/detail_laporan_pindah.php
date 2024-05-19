@@ -6,6 +6,11 @@ $query = "SELECT p.*, spt.*
         WHERE p.id_penduduk = '$get_id_penduduk'";
 $hasil = mysqli_query($koneksi, $query);
 
+$sql_kk = "SELECT * FROM penduduk JOIN anggota_keluarga ON penduduk.id_penduduk = anggota_keluarga.id_penduduk WHERE penduduk.id_penduduk=$get_id_penduduk";
+$query = mysqli_query($koneksi, $sql_kk);
+$hasil_id_kk = mysqli_fetch_assoc($query);
+$id_kk = $hasil_id_kk['id_kk'];
+
 if (!$hasil) {
     die('Error: ' . mysqli_error($koneksi));
 }
@@ -68,7 +73,7 @@ $alamat_penduduk_baru = $data_pindah[0]['alamat_baru'] . ", Rt: " . $data_pindah
         <tbody>
             <?php
             $no = 1;
-            $sql = $koneksi->query("SELECT * FROM anggota_keluarga_pindah JOIN penduduk ON anggota_keluarga_pindah.id_penduduk=penduduk.id_penduduk");
+            $sql = $koneksi->query("SELECT * FROM anggota_keluarga_pindah_temp JOIN penduduk ON anggota_keluarga_pindah_temp.id_penduduk=penduduk.id_penduduk WHERE id_kk='$id_kk'");
             while ($data = $sql->fetch_assoc()) {
             ?>
                 <tr>

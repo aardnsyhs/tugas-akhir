@@ -115,7 +115,7 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
                 $no = 1;
                 $sql = $koneksi->query("SELECT * FROM penduduk 
                 JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_penduduk 
-                JOIN anggota_keluarga_pindah ON penduduk.id_penduduk=anggota_keluarga_pindah.id_penduduk 
+                JOIN anggota_keluarga_pindah_temp ON penduduk.id_penduduk=anggota_keluarga_pindah_temp.id_penduduk 
                 WHERE anggota_keluarga.id_kk='$id_kk'");
                 while ($data = $sql->fetch_assoc()) {
                 ?>
@@ -130,9 +130,9 @@ $alamat_penduduk = $hasil_penduduk['alamat_penduduk'] . ", " . "Rt: " . $hasil_p
                             <?= $data['nama_penduduk']; ?>
                         </td>
                         <td>
-                            <a href="?page=hapus_anggota_pindah&id_anggota_keluarga_pindah=<?= $data['id_anggota_keluarga_pindah']; ?>&no_kk=<?= encrypt($no_kk) ?>" onclick="return confirm('Apakah anda yakin hapus data ini ?')" title="Hapus" class="btn btn-danger btn-sm">
+                            <a href="?page=hapus_anggota_pindah&id_anggota_keluarga_pindah_temp=<?= $data['id_anggota_keluarga_pindah_temp']; ?>&no_kk=<?= encrypt($no_kk) ?>" onclick="return confirm('Apakah anda yakin hapus data ini ?')" title="Hapus" class="btn btn-danger btn-sm">
                                 <i class="fa fa-trash"></i>
-                            </a>
+                                </>
                         </td>
                     </tr>
                 <?php
@@ -186,7 +186,7 @@ if (isset($_POST['Simpan'])) {
     $no_kk = decrypt($encoded_no_kk);
 
     $id_penduduk = $_POST['id_penduduk'];
-    $query = "INSERT INTO `anggota_keluarga_pindah` VALUES (NULL, '$id_penduduk', '$id_kk')";
+    $query = "INSERT INTO `anggota_keluarga_pindah_temp` VALUES (NULL, '$id_penduduk', '$id_kk')";
     $hasil = mysqli_query($koneksi, $query);
     $no_kk = encrypt($no_kk);
 
