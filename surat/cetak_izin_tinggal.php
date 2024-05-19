@@ -64,7 +64,7 @@ $pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Lurah Cibabat, Kecamata
 $pdf->SetX(15);
 $pdf->cell(45, 7, 'Nama', 0, 0, 'L');
 $pdf->cell(2, 7, ':', 0, 0, 'L');
-$pdf->cell(80, 7, substr(strtoupper($cek_data['nama_penduduk']), 0, 17), 0, 1, 'L');
+$pdf->cell(80, 7, substr(strtoupper($cek_data['nama_penduduk']), 0, 25), 0, 1, 'L');
 
 $pdf->SetX(15);
 $pdf->cell(45, 7, 'Jenis Kelamin', 0, 0, 'L');
@@ -109,7 +109,7 @@ $pdf->MultiCell(0, 7, $alamat_tujuan, 0, 'L');
 $pdf->Cell(0, 7, '', 0, 1);
 
 $pdf->MultiCell(0, 7, 'Demikian Surat Keterangan Izin Tinggal Sementara ini dibuat dan diberikan kepada yang bersangkutan untuk', 0, 'L');
-$pdf->MultiCell(0, 7, 'dipergunakan sebagaimana mestinya dan berlaku selama 3 (tiga) bulan sejak tanggal dikeluarkan', 0, 'L');
+$pdf->MultiCell(0, 7, 'dipergunakan sebagaimana mestinya dan berlaku selama 3 (tiga) bulan sejak tanggal dikeluarkan.', 0, 'L');
 
 
 $pdf->SetY($pdf->GetY() + 20);
@@ -142,19 +142,21 @@ $pdf->Ln(5);
 $pdf->SetX(17);
 $pdf->Cell(160, 7, 'An. LURAH CIBABAT', 0, 0, 'R');
 
-$pdf->SetY($pdf->GetY() - 7);
+$pdf->SetY($pdf->GetY() - 0);
 $pdf->SetX(17);
 $pdf->Cell(0, 7, 'Yang Bersangkutan', 0, 1, 'L');
 
-$pdf->Ln(5);
+$pdf->Ln(13);
+$pdf->SetX(12);
+$pdf->Cell(0, 34, $cek_data['nama_penduduk'], 0, 0, 'L');
 
-$pdf->SetX(10);
-$pdf->Cell(0, 32, '_________________________', 0, 0, 'L');
+$pdf->SetX(8);
+$pdf->Cell(0, 34, '_________________________', 0, 0, 'L');
 
-$posX = 140;
-$posY = $pdf->GetY();
-$width = 40;
-$height = 30;
+$posX = 132;
+$posY = $pdf->GetY() - 12;
+$width = 60;
+$height = 50;
 
 $pdf->Image('../assets/dist/img/ttd.png', $posX, $posY, $width, $height);
 

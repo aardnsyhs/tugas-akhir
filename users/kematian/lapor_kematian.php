@@ -2,7 +2,6 @@
 $nik = $_SESSION['username'];
 $id_user = $_SESSION['id'];
 
-
 $query = "SELECT ak.id_kk FROM anggota_keluarga ak
           JOIN kk k ON ak.id_kk = k.id_kk
           WHERE ak.id_penduduk IN (SELECT id_penduduk FROM penduduk WHERE nik_penduduk = '$nik')";

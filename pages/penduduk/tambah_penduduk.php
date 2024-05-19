@@ -77,7 +77,6 @@
             <td><input type="text" class="form-control" name="rw_penduduk"></td>
         </tr>
     </table>
-
     <h3>C. Data Lain-lain</h3>
     <table class="table table-striped table-middle">
         <tr>
