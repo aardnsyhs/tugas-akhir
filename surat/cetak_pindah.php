@@ -184,21 +184,28 @@ $pdf->MultiCell(0, 7, 'dipergunakan sebagaimana mestinya.', 0, 'L');
 
 $pdf->SetY($pdf->GetY() + 20);
 
-// Atur Tanggal Hari ini
-$bulan = [
-    1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei',
-    6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September',
-    10 => 'Oktober', 11 => 'November', 12 => 'Desember'
-];
-
-$hari = date('d');
-$month = $bulan[(int)date('m')];
-$tahun = date('Y');
-
-$tanggal_sekarang = $hari . ' ' . $month . ' ' . $tahun;
+$tanggal_pindah = $cek_data_surat_pindah['tanggal_pindah'];
+$bulan_indonesia = array(
+    'January' => 'Januari',
+    'February' => 'Februari',
+    'March' => 'Maret',
+    'April' => 'April',
+    'May' => 'Mei',
+    'June' => 'Juni',
+    'July' => 'Juli',
+    'August' => 'Agustus',
+    'September' => 'September',
+    'October' => 'Oktober',
+    'November' => 'November',
+    'December' => 'Desember'
+);
+$tanggal_pindah_format = date("d F Y", strtotime($tanggal_pindah));
+foreach ($bulan_indonesia as $bulan_inggris => $bulan_indonesia) {
+    $tanggal_pindah_format = str_replace($bulan_inggris, $bulan_indonesia, $tanggal_pindah_format);
+}
 
 $pdf->SetX(15);
-$pdf->cell(160, 7, 'Cibabat, ' . $tanggal_sekarang, 0, 0, 'R');
+$pdf->cell(160, 7, 'Cibabat, ' . $tanggal_pindah_format, 0, 0, 'R');
 
 $pdf->Ln(5);
 

@@ -18,8 +18,9 @@ $kecamatan_baru = $hasil['kecamatan_baru'];
 $kabupaten_kota_baru = $hasil['kabupaten_kota_baru'];
 $provinsi_baru = $hasil['provinsi_baru'];
 $alasan_pindah = $hasil['alasan_pindah'];
+$tanggal = date('Y-m-d');
 
-$sql = "INSERT INTO surat_pindah VALUES (NULL, '$id_penduduk', '$alamat_baru', '$rt_baru', '$rw_baru', '$desa_kelurahan_baru', '$kecamatan_baru', '$kabupaten_kota_baru', '$provinsi_baru', '$alasan_pindah')";
+$sql = "INSERT INTO surat_pindah VALUES (NULL, '$id_penduduk', '$alamat_baru', '$rt_baru', '$rw_baru', '$desa_kelurahan_baru', '$kecamatan_baru', '$kabupaten_kota_baru', '$provinsi_baru', '$alasan_pindah', '$tanggal')";
 $tambah_pindah = mysqli_query($koneksi, $sql);
 
 $sql = "UPDATE `penduduk` SET `alamat_penduduk` = '$alamat_baru', `rt_penduduk` = '$rt_baru', `rw_penduduk` = '$rw_baru', `desa_kelurahan_penduduk` = '$desa_kelurahan_baru', `kecamatan_penduduk` = '$kecamatan_baru', `kabupaten_kota_penduduk` = '$kabupaten_kota_baru', `provinsi_penduduk` = '$provinsi_baru' WHERE `id_penduduk` = '$id_penduduk'";

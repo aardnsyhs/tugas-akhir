@@ -18,7 +18,7 @@ if (!isset($_SESSION["username"])) {
     $query_login = mysqli_query($koneksi, $sql_login);
     $data_login = mysqli_fetch_array($query_login, MYSQLI_BOTH);
     $jumlah_login = mysqli_num_rows($query_login);
-    
+
     if ($jumlah_login == 1) {
         $_SESSION['id_kk'] = $data_login['id_kk'];
     }
@@ -130,12 +130,15 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="?page=lapor_kematian" class="nav-link">
-                                        <i class="nav-icon far fa-circle text-warning"></i>
-                                        <p>Lapor Kematian</p>
-                                    </a>
+                                    <?php foreach ($data_anggota_keluarga as $kk) : ?>
+                                        <?php $encoded_no_kk = encrypt($kk['no_kk']); ?>
+                                        <a href="?page=lapor_kematian" class="nav-link">
+                                            <i class="nav-icon far fa-circle text-warning"></i>
+                                            <p>Lapor Kematian</p>
+                                        </a>
+                                    <?php endforeach; ?>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=lapor_izin_tinggal" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>Lapor Izin Tinggal</p>
                                     </a>
@@ -208,10 +211,12 @@ $data_anggota_keluarga = mysqli_query($koneksi, $query);
                                 include "pindah/hapus_anggota_pindah.php";
                                 break;
 
-                                //suket
-                            case 'suket-domisili':
-                                include "surat/suket_domisili.php";
+                                //izin tinggal
+                            case 'lapor_izin_tinggal':
+                                include "izin_tinggal/lapor_izin_tinggal.php";
                                 break;
+
+                                //suket
                             case 'surat_kematian':
                                 include "surat/surat_kematian.php";
                                 break;

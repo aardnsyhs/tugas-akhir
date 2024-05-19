@@ -12,6 +12,7 @@ $penyebab_kematian = $hasil['penyebab_kematian'];
 $tempat_kematian = $hasil['tempat_kematian'];
 $bin_binti = $hasil['bin_binti'];
 $pelapor = $hasil['pelapor'];
+$tanggal = date('Y-m-d');
 
 function hitungUsia($tanggal_lahir, $tanggal_kematian)
 {
@@ -25,7 +26,7 @@ $tanggal_kematian = $hasil['tanggal_kematian'];
 
 $hitung_usia = hitungUsia($tanggal_lahir, $tanggal_kematian);
 
-$sql = "INSERT INTO surat_kematian VALUES (NULL, '$id_penduduk', '$tanggal_kematian', '$jam_kematian', '$penyebab_kematian', '$tempat_kematian', '$hitung_usia', '$bin_binti', '$pelapor')";
+$sql = "INSERT INTO surat_kematian VALUES (NULL, '$id_penduduk', '$tanggal_kematian', '$jam_kematian', '$penyebab_kematian', '$tempat_kematian', '$hitung_usia', '$bin_binti', '$pelapor', '$tanggal')";
 $tambah_kematian = mysqli_query($koneksi, $sql);
 
 $sql = "UPDATE penduduk SET status = 'Meninggal' WHERE id_penduduk = '$id_penduduk'";

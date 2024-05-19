@@ -122,7 +122,7 @@ include "config/connection.php";
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=izin_tinggal" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>Data Izin Tinggal</p>
                                     </a>
@@ -150,7 +150,7 @@ include "config/connection.php";
                                         <p>Laporan Surat Kematian</p>
                                     </a>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=surat_izin_tinggal" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>Laporan Surat Izin Tinggal</p>
                                     </a>
@@ -185,20 +185,6 @@ include "config/connection.php";
                     if (isset($_GET['page'])) {
                         $page = $_GET['page'];
                         switch ($page) {
-                                //Pengguna
-                            case 'data-pengguna':
-                                include "admin/pengguna/data_pengguna.php";
-                                break;
-                            case 'add-pengguna':
-                                include "admin/pengguna/add_pengguna.php";
-                                break;
-                            case 'edit-pengguna':
-                                include "admin/pengguna/edit_pengguna.php";
-                                break;
-                            case 'del-pengguna':
-                                include "admin/pengguna/del_pengguna.php";
-                                break;
-
                                 //kartu KK
                             case 'kk':
                                 include "pages/kk/index.php";
@@ -206,17 +192,11 @@ include "config/connection.php";
                             case 'tambah_kk':
                                 include "pages/kk/tambah_kk.php";
                                 break;
-                            case 'edit-kartu':
-                                include "admin/kartu/edit_kartu.php";
-                                break;
                             case 'anggota':
                                 include "pages/kk/anggota.php";
                                 break;
                             case 'hapus_anggota':
                                 include "pages/kk/hapus_anggota.php";
-                                break;
-                            case 'del-kartu':
-                                include "admin/kartu/del_kartu.php";
                                 break;
 
                                 //penduduk
@@ -255,6 +235,17 @@ include "config/connection.php";
                                 include "surat/proses_pindah.php";
                                 break;
 
+                                //laporan Izin Tinggal
+                            case 'detail_laporan_izin_tinggal':
+                                include "surat/detail_laporan_izin_tinggal.php";
+                                break;
+                            case 'edit_laporan_izin_tinggal':
+                                include "surat/edit_laporan_izin_tinggal.php";
+                                break;
+                            case 'proses_izin_tinggal':
+                                include "surat/proses_izin_tinggal.php";
+                                break;
+
                                 //kematian
                             case 'kematian':
                                 include "pages/kematian/index.php";
@@ -268,9 +259,6 @@ include "config/connection.php";
                             case 'edit_kematian':
                                 include "pages/kematian/edit_kematian.php";
                                 break;
-                            case 'del-mendu':
-                                include "admin/mendu/del_mendu.php";
-                                break;
 
                                 //pindah
                             case 'pindah':
@@ -283,9 +271,20 @@ include "config/connection.php";
                                 include "pages/pindah/edit_pindah.php";
                                 break;
 
+                                //Izin Tinggal
+                            case 'izin_tinggal':
+                                include "pages/izin_tinggal/index.php";
+                                break;
+                            case 'detail_izin_tinggal':
+                                include "pages/izin_tinggal/detail_izin_tinggal.php";
+                                break;
+                            case 'edit_izin_tinggal':
+                                include "pages/izin_tinggal/edit_izin_tinggal.php";
+                                break;
+
                                 //suket
-                            case 'suket-domisili':
-                                include "surat/suket_domisili.php";
+                            case 'surat_izin_tinggal':
+                                include "surat/surat_izin_tinggal.php";
                                 break;
                             case 'surat_kematian':
                                 include "surat/surat_kematian.php";
