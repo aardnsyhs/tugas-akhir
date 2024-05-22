@@ -218,9 +218,6 @@ if ($hasil_kk_pindah) {
     }
 }
 
-
-
-
 $pdf->Ln(5);
 
 $pdf->MultiCell(0, 7, 'Demikian Surat Pengantar Pindah ini dibuat dan diberikan kepada yang bersangkutan untuk', 0, 'L');
