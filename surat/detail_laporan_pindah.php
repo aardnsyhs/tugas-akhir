@@ -58,6 +58,11 @@ $alamat_penduduk_baru = $data_pindah[0]['alamat_baru'] . ", Rt: " . $data_pindah
             <td width="1%">:</td>
             <td><?= $alamat_penduduk_baru ?></td>
         </tr>
+        <tr>
+            <th width="22%">Alasan Pindah</th>
+            <td width="1%">:</td>
+            <td><?= $data_pindah[0]['alasan_pindah'] ?></td>
+        </tr>
     </table>
 </div>
 <div class="mt-2">

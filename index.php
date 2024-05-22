@@ -32,7 +32,6 @@ include "config/connection.php";
     <script src="assets/plugins/alert.js"></script>
 </head>
 
-
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <nav class="main-header navbar navbar-expand navbar-dark">
