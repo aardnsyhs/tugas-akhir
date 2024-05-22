@@ -186,13 +186,29 @@ $pdf->Ln(5);
 $startX = ($pdf->GetPageWidth() - $totalWidth) / 2;
 $pdf->SetX($startX);
 
-$pdf->Cell($cellWidth[0], 7, 'No', 1, 0, 'C');
-$pdf->Cell($cellWidth[1], 7, 'NIK Penduduk', 1, 0, 'C');
-$pdf->Cell($cellWidth[2], 7, 'Nama Penduduk', 1, 1, 'C');
-
 $pdf->SetFont('Times', '', 12);
-$no = 1;
+
 if ($hasil_kk_pindah) {
+    $pdf->Cell($cellWidth[0], 7, 'No', 1, 0, 'C');
+    $pdf->Cell($cellWidth[1], 7, 'NIK Penduduk', 1, 0, 'C');
+    $pdf->Cell($cellWidth[2], 7, 'Nama Penduduk', 1, 1, 'C');
+
+    $pdf->SetFont('Times', '', 12);
+    $no = 1;
+    while ($row = mysqli_fetch_assoc($hasil_kk_pindah)) {
+        $pdf->SetX($startX);
+        $pdf->Cell($cellWidth[0], 7, $no, 1, 0, 'C');
+        $pdf->Cell($cellWidth[1], 7, $row['nik_penduduk'], 1, 0, 'C');
+        $pdf->Cell($cellWidth[2], 7, $row['nama_penduduk'], 1, 1, 'C');
+        $no++;
+    }
+} elseif ($hasil_kk_pindah && $jumlah_anggota > 1) {
+    $pdf->Cell($cellWidth[0], 7, 'No', 1, 0, 'C');
+    $pdf->Cell($cellWidth[1], 7, 'NIK Penduduk', 1, 0, 'C');
+    $pdf->Cell($cellWidth[2], 7, 'Nama Penduduk', 1, 1, 'C');
+
+    $pdf->SetFont('Times', '', 12);
+    $no = 1;
     while ($row = mysqli_fetch_assoc($hasil_kk_pindah)) {
         $pdf->SetX($startX);
         $pdf->Cell($cellWidth[0], 7, $no, 1, 0, 'C');
