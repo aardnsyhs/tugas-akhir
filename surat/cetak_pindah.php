@@ -32,43 +32,62 @@ class PDF extends FPDF
 $id = $_GET['id_penduduk'];
 $id_kk = $_GET['id_kk'];
 
-// Query pertama untuk mendapatkan data penduduk berdasarkan ID
+// Query untuk mendapatkan data penduduk berdasarkan ID penduduk
 $query_penduduk = "SELECT * FROM penduduk JOIN riwayat_tinggal ON penduduk.id_penduduk=riwayat_tinggal.id_penduduk WHERE riwayat_tinggal.id_penduduk = '$id'";
 $hasil_penduduk = mysqli_query($koneksi, $query_penduduk);
-$cek_data_penduduk = mysqli_fetch_assoc($hasil_penduduk);
-
-// Query kedua untuk mendapatkan data surat pindah berdasarkan ID penduduk
-$query_surat_pindah = "SELECT * FROM surat_pindah JOIN penduduk ON surat_pindah.id_penduduk WHERE surat_pindah.id_penduduk = '$id'";
-$hasil_surat_pindah = mysqli_query($koneksi, $query_surat_pindah);
-$cek_data_surat_pindah = mysqli_fetch_assoc($hasil_surat_pindah);
-
-// Query ketiga untuk mendapatkan data kartu keluarga berdasarkan ID penduduk
-$query_kk = "SELECT * FROM penduduk JOIN anggota_keluarga_pindah ON penduduk.id_penduduk=anggota_keluarga_pindah.id_penduduk WHERE anggota_keluarga_pindah.id_kk = '$id_kk'";
-$hasil_kk_pindah = mysqli_query($koneksi, $query_kk);
-
-$query_anggota_pindah = "SELECT (SELECT COUNT(*) FROM penduduk JOIN anggota_keluarga_pindah 
-ON penduduk.id_penduduk = anggota_keluarga_pindah.id_penduduk 
-WHERE anggota_keluarga_pindah.id_kk = $id_kk) AS jumlah_anggota_pindah, penduduk.* FROM penduduk 
-JOIN anggota_keluarga_pindah ON penduduk.id_penduduk = anggota_keluarga_pindah.id_penduduk 
-WHERE anggota_keluarga_pindah.id_kk = $id_kk";
-$hasil_anggota_pindah = mysqli_query($koneksi, $query_anggota_pindah);
-$jumlah_anggota_pindah = mysqli_fetch_assoc($hasil_anggota_pindah);
-$jumlah_anggota = $jumlah_anggota_pindah['jumlah_anggota_pindah'];
-
-$query_no_kk = "SELECT no_kk FROM penduduk JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_anggota JOIN kk ON penduduk.id_penduduk=kk.id_penduduk WHERE anggota_keluarga.id_kk='$id_kk'";
-$hasil_no_kk = mysqli_query($koneksi, $query_no_kk);
-$no_kk = mysqli_fetch_assoc($hasil_no_kk);
-
-if (!$hasil_kk_pindah) {
+if (!$hasil_penduduk) {
     die('Query Error: ' . mysqli_error($koneksi));
 }
+$cek_data_penduduk = mysqli_fetch_assoc($hasil_penduduk);
 
-$cek_id_kk = mysqli_fetch_assoc($hasil_kk_pindah);
-if (!$cek_id_kk) {
-    die('Data not found for id_penduduk: ' . $id);
+// Query untuk mendapatkan data surat pindah berdasarkan ID penduduk
+$query_surat_pindah = "SELECT * FROM surat_pindah JOIN penduduk ON surat_pindah.id_penduduk = penduduk.id_penduduk WHERE surat_pindah.id_penduduk = '$id'";
+$hasil_surat_pindah = mysqli_query($koneksi, $query_surat_pindah);
+if (!$hasil_surat_pindah) {
+    die('Query Error: ' . mysqli_error($koneksi));
+}
+$cek_data_surat_pindah = mysqli_fetch_assoc($hasil_surat_pindah);
+
+// Query untuk mendapatkan jumlah anggota keluarga yang pindah berdasarkan ID KK
+$query_jumlah_anggota_pindah = "SELECT COUNT(*) AS jumlah_anggota_pindah FROM anggota_keluarga_pindah WHERE id_kk = '$id_kk'";
+$hasil_jumlah_anggota_pindah = mysqli_query($koneksi, $query_jumlah_anggota_pindah);
+if (!$hasil_jumlah_anggota_pindah) {
+    die('Query Error: ' . mysqli_error($koneksi));
+}
+$data_jumlah_anggota_pindah = mysqli_fetch_assoc($hasil_jumlah_anggota_pindah);
+$jumlah_anggota_pindah = $data_jumlah_anggota_pindah['jumlah_anggota_pindah'];
+
+$hasil_kk_pindah = null;
+$jumlah_anggota = 0;
+
+// Jika jumlah anggota pindah lebih dari 1, jalankan query untuk mendapatkan data anggota keluarga pindah
+if ($jumlah_anggota_pindah > 1) {
+    $query_kk = "SELECT * FROM penduduk JOIN anggota_keluarga_pindah ON penduduk.id_penduduk=anggota_keluarga_pindah.id_penduduk WHERE anggota_keluarga_pindah.id_kk = '$id_kk'";
+    $hasil_kk_pindah = mysqli_query($koneksi, $query_kk);
+    if (!$hasil_kk_pindah) {
+        die('Query Error: ' . mysqli_error($koneksi));
+    }
+
+    $query_anggota_pindah = "SELECT (SELECT COUNT(*) FROM penduduk JOIN anggota_keluarga_pindah 
+                             ON penduduk.id_penduduk = anggota_keluarga_pindah.id_penduduk 
+                             WHERE anggota_keluarga_pindah.id_kk = '$id_kk') AS jumlah_anggota_pindah, penduduk.* FROM penduduk 
+                             JOIN anggota_keluarga_pindah ON penduduk.id_penduduk = anggota_keluarga_pindah.id_penduduk 
+                             WHERE anggota_keluarga_pindah.id_kk = '$id_kk'";
+    $hasil_anggota_pindah = mysqli_query($koneksi, $query_anggota_pindah);
+    if (!$hasil_anggota_pindah) {
+        die('Query Error: ' . mysqli_error($koneksi));
+    }
+    $data_anggota_pindah = mysqli_fetch_assoc($hasil_anggota_pindah);
+    $jumlah_anggota = $data_anggota_pindah['jumlah_anggota_pindah'];
 }
 
-// Menggabungkan alamat asal dari data penduduk
+// Query untuk mendapatkan nomor KK
+$query_no_kk = "SELECT no_kk FROM penduduk JOIN anggota_keluarga ON penduduk.id_penduduk=anggota_keluarga.id_penduduk JOIN kk ON penduduk.id_penduduk=kk.id_penduduk WHERE anggota_keluarga.id_kk='$id_kk'";
+$hasil_no_kk = mysqli_query($koneksi, $query_no_kk);
+if (!$hasil_no_kk) {
+    die('Query Error: ' . mysqli_error($koneksi));
+}
+$no_kk = mysqli_fetch_assoc($hasil_no_kk);
 $alamat_asal = $cek_data_penduduk['alamat'] . ", RT. " . $cek_data_penduduk['rt'] . " RW. " .
     $cek_data_penduduk['rw'] . "\n" .
     $cek_data_penduduk['desa_kelurahan'] . ", " .
@@ -85,14 +104,9 @@ $alamat_tujuan = $cek_data_surat_pindah['alamat_baru'] . ", RT. " . $cek_data_su
 
 $pdf = new PDF('P', 'mm', [210, 330]);
 $pdf->AliasNbPages();
-
 $pdf->AddPage();
-
 $pdf->SetFont('Times', '', 12);
 
-$nomor = 1;
-
-$pdf->Ln();
 $pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Lurah Cibabat, Kecamatan Cimahi Utara, Kota Cimahi menerangkan dengan sebenarnya bahwa : ', 0, 'L');
 
 $pdf->SetX(15);
@@ -163,21 +177,32 @@ $pdf->cell(45, 7, 'Keluarga Pindah', 0, 0, 'L');
 $pdf->cell(2, 7, ':', 0, 0, 'L');
 $pdf->cell(80, 7, substr(strtoupper($jumlah_anggota . ' Orang'), 0, 20), 0, 1, 'L');
 
-// Menambahkan judul tabel
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(10, 7, 'No', 1, 0, 'C');
-$pdf->Cell(60, 7, 'NIK Penduduk', 1, 0, 'C');
-$pdf->Cell(80, 7, 'Nama Penduduk', 1, 1, 'C');
+$cellWidth = array(10, 60, 80);
+$totalWidth = array_sum($cellWidth);
 
-// Menambahkan data ke tabel
+$pdf->Ln(5);
+
+$startX = ($pdf->GetPageWidth() - $totalWidth) / 2;
+$pdf->SetX($startX);
+
+$pdf->Cell($cellWidth[0], 7, 'No', 1, 0, 'C');
+$pdf->Cell($cellWidth[1], 7, 'NIK Penduduk', 1, 0, 'C');
+$pdf->Cell($cellWidth[2], 7, 'Nama Penduduk', 1, 1, 'C');
+
 $pdf->SetFont('Times', '', 12);
 $no = 1;
-foreach ($hasil_kk_pindah as $row) {
-    $pdf->Cell(10, 7, $no, 1, 0, 'C');
-    $pdf->Cell(60, 7, $row['nik_penduduk'], 1, 0, 'C');
-    $pdf->Cell(80, 7, $row['nama_penduduk'], 1, 1, 'C');
-    $no++;
+if ($hasil_kk_pindah) {
+    while ($row = mysqli_fetch_assoc($hasil_kk_pindah)) {
+        $pdf->SetX($startX);
+        $pdf->Cell($cellWidth[0], 7, $no, 1, 0, 'C');
+        $pdf->Cell($cellWidth[1], 7, $row['nik_penduduk'], 1, 0, 'C');
+        $pdf->Cell($cellWidth[2], 7, $row['nama_penduduk'], 1, 1, 'C');
+        $no++;
+    }
 }
+
+$pdf->Ln(5);
 
 $pdf->MultiCell(0, 7, 'Demikian Surat Pengantar Pindah ini dibuat dan diberikan kepada yang bersangkutan untuk', 0, 'L');
 $pdf->MultiCell(0, 7, 'dipergunakan sebagaimana mestinya.', 0, 'L');
@@ -227,6 +252,5 @@ $pdf->Cell(150, 7, 'Nama Lurah', 0, 0, 'R');
 
 $pdf->SetX(17);
 $pdf->Cell(166, 7, '_________________________', 0, 0, 'R');
-
 
 $pdf->Output();
