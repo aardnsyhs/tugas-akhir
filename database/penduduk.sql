@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Bulan Mei 2024 pada 03.50
+-- Waktu pembuatan: 22 Bulan Mei 2024 pada 04.00
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -401,7 +401,8 @@ ALTER TABLE `anggota_keluarga_pindah`
 -- Indeks untuk tabel `anggota_keluarga_pindah_temp`
 --
 ALTER TABLE `anggota_keluarga_pindah_temp`
-  ADD PRIMARY KEY (`id_anggota_keluarga_pindah_temp`);
+  ADD PRIMARY KEY (`id_anggota_keluarga_pindah_temp`),
+  ADD KEY `id_penduduk` (`id_penduduk`);
 
 --
 -- Indeks untuk tabel `kk`
@@ -583,7 +584,14 @@ ALTER TABLE `anggota_keluarga`
 -- Ketidakleluasaan untuk tabel `anggota_keluarga_pindah`
 --
 ALTER TABLE `anggota_keluarga_pindah`
-  ADD CONSTRAINT `anggota_keluarga_pindah_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `anggota_keluarga_pindah_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `anggota_keluarga_pindah_ibfk_2` FOREIGN KEY (`id_kk`) REFERENCES `kk` (`id_kk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `anggota_keluarga_pindah_temp`
+--
+ALTER TABLE `anggota_keluarga_pindah_temp`
+  ADD CONSTRAINT `anggota_keluarga_pindah_temp_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `kk`
@@ -602,6 +610,18 @@ ALTER TABLE `penduduk`
 --
 ALTER TABLE `riwayat_tinggal`
   ADD CONSTRAINT `riwayat_tinggal_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `surat_izin_tinggal`
+--
+ALTER TABLE `surat_izin_tinggal`
+  ADD CONSTRAINT `surat_izin_tinggal_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `surat_izin_tinggal_temp`
+--
+ALTER TABLE `surat_izin_tinggal_temp`
+  ADD CONSTRAINT `surat_izin_tinggal_temp_ibfk_1` FOREIGN KEY (`id_penduduk`) REFERENCES `penduduk` (`id_penduduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `surat_kematian`
