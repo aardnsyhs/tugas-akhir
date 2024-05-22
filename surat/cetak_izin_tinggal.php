@@ -58,7 +58,6 @@ $pdf->SetFont('Times', '', 12);
 
 $nomor = 1;
 
-$pdf->Ln();
 $pdf->MultiCell(0, 7, 'Yang bertanda tangan di bawah ini Lurah Cibabat, Kecamatan Cimahi Utara, Kota Cimahi menerangkan dengan sebenarnya bahwa : ', 0, 'L');
 
 $pdf->SetX(15);

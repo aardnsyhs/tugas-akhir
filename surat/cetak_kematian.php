@@ -34,8 +34,8 @@ $id = $_GET['id'];
 $query = "SELECT * FROM penduduk JOIN surat_kematian ON penduduk.id_penduduk=surat_kematian.id_penduduk WHERE surat_kematian.id_penduduk = '$id'";
 $hasil = mysqli_query($koneksi, $query);
 
-$cek_pelapor = mysqli_fetch_assoc($hasil);
-$pelapor = $cek_pelapor['pelapor'];
+$cek = mysqli_fetch_assoc($hasil);
+$pelapor = $cek['pelapor'];
 
 $query = "SELECT * FROM penduduk WHERE id_penduduk = '$pelapor'";
 $cek_hasil = mysqli_query($koneksi, $query);
@@ -166,7 +166,7 @@ $pdf->MultiCell(0, 7, 'Demikian surat keterangan ini dibuat, atas perhatian dan 
 
 $pdf->SetY($pdf->GetY() + 20);
 
-$tanggal_pindah = $cek_data_surat_pindah['tanggal_pindah'];
+$tanggal = $cek['tanggal'];
 $bulan_indonesia = array(
     'January' => 'Januari',
     'February' => 'Februari',
@@ -181,13 +181,13 @@ $bulan_indonesia = array(
     'November' => 'November',
     'December' => 'Desember'
 );
-$tanggal_pindah_format = date("d F Y", strtotime($tanggal_pindah));
+$tanggal_format = date("d F Y", strtotime($tanggal));
 foreach ($bulan_indonesia as $bulan_inggris => $bulan_indonesia) {
-    $tanggal_pindah_format = str_replace($bulan_inggris, $bulan_indonesia, $tanggal_pindah_format);
+    $tanggal_format = str_replace($bulan_inggris, $bulan_indonesia, $tanggal_format);
 }
 
 $pdf->SetX(15);
-$pdf->cell(160, 7, 'Cibabat, ' . $tanggal_pindah_format, 0, 0, 'R');
+$pdf->cell(160, 7, 'Cibabat, ' . $tanggal_format, 0, 0, 'R');
 
 $pdf->Ln(5);
 
